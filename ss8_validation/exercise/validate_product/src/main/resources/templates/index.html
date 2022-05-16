@@ -5,33 +5,51 @@
 <body>
 <nav th:replace="/layout :: nav"></nav>
 <div class="container-fluid col-8">
-    <h3>Product</h3>
-    <p>
-        <a th:href="@{/product/create}">
-            Add new product
-        </a>
-    </p>
+    <div class="d-flex float-left">
+        <div class="col-3">
+            <h3>Product</h3>
+            <p>
+                <a th:href="@{/product/create}">
+                    Add new product
+                </a>
+            </p>
+        </div>
+
+        <div class="col-9 justify-contenx-end">
+            <form action="/product/list">
+                <div class="my-3 d-flex float-left">
+                    <div class="mx-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filter"
+                             viewBox="0 0 16 16">
+                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </div>
+                    <div class="col-3 mx-1">
+                        <select class="form-control" name="sort">
+                            <option value="name">Name</option>
+                            <option value="price">Price</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input class="mx-1" type="radio" name="dir" value="asc">Ascending
+                        <input class="mx-1" type="radio" name="dir" value="desc">Descending
+                        <input class="btn btn-info mx-1" type="submit" value="Sort">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
     <div class="notify">
         <div th:if="${success}">
             <span style="color: darkcyan" th:text="${success}"></span>
         </div>
     </div>
-<!--    Sort By Price-->
-<!--    <a href="/product/list?sort=price,asc">Ascending</a>-->
-<!--    <a href="/product/list?sort=price,desc">Descending</a>-->
-    <form class="col-12 d-flex float-left" action="/product/list">
-        <div class="col-3 pl-3">
-            <select class="form-control m-3" name="sort">
-                <option value="name">Name</option>
-                <option value="price">Price</option>
-            </select>
-        </div>
-        <div class="m-3">
-            <input class="" type="radio" name="dir" value="asc">Ascending
-            <input class="" type="radio" name="dir" value="desc">Descending
-            <input class="btn btn-info mr-3" type="submit" value="Sort">
-        </div>
-    </form>
+
+    <!--    Sort By Price-->
+    <!--    <a href="/product/list?sort=price,asc">Ascending</a>-->
+    <!--    <a href="/product/list?sort=price,desc">Descending</a>-->
+
     <table class="table table-striped">
         <thead>
         <tr style="background-color: #069A8E;color: white">
@@ -81,8 +99,8 @@
            th:href="@{list(page=${products.number + 1}, keyword=${name_keyword},sort=${sort},dir=${dir})}"><i
                 class="fas fa-chevron-right"></i></a>
 
-<!--        <a class="btn btn-info" th:if="${blogList.hasNext()}" th:href="@{list(page=${blogList.number + 1},keyword=${createDate},sort=${sortBy})}"><i-->
-<!--                class="fas fa-chevron-right"></i></a>-->
+        <!--        <a class="btn btn-info" th:if="${blogList.hasNext()}" th:href="@{list(page=${blogList.number + 1},keyword=${createDate},sort=${sortBy})}"><i-->
+        <!--                class="fas fa-chevron-right"></i></a>-->
     </div>
 </div>
 

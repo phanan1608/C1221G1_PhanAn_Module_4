@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<nav th:replace="/layout :: nav"></nav>
+<div class="container-fluid text-center">
+    <h3>View Book</h3>
+    <p>
+        <a th:href="@{/book/list}">
+            Back to book list
+        </a>
+    </p>
+    <div id="detail">
+        <div>
+            <label>ID:</label>
+            <label th:text="${book.id}"></label>
+        </div>
+        <div>
+            <label>Name:</label>
+            <label th:text="${book.name}"></label>
+        </div>
+        <div>
+            <label>Quantity:</label>
+            <label th:text="${book.quantity}"></label>
+        </div>
+        <div>
+            <button
+                    th:attr="onclick=|borrow('${book.id}', '${book.name}')|"
+                    type="button" class="btn btn-danger" data-toggle="modal"
+                    data-target="#exampleModal">
+                Borrow
+            </button>
+            <form action="/book/restore" method="post">
+                <input type="number" name="rentId">
+                <input type="submit" value="Restore">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Borrow Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/book/borrow}" method="post">
+                <div class="modal-body">
+                    <h3>Do you want to borrow book with information: </h3>
+                    <div id="book_id"></div>
+                    <div id="book_name"></div>
+                    <input type="hidden" name="id" id="id_delete">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
+<script>
+    function borrow(id, name) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("book_id").innerText = "id: " + id;
+        document.getElementById("book_name").innerText = "title: " + name;
+    }
+</script>
+<!-- MDB -->
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
+></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>

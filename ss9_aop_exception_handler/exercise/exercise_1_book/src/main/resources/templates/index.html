@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+</head>
+<body>
+<nav th:replace="/layout :: nav"></nav>
+<div class="container-fluid col-8">
+    <div class="d-flex float-left">
+        <div class="col-3">
+            <h3>Book</h3>
+            <p>
+                <a th:href="@{/book/create}">
+                    Add new book
+                </a>
+            </p>
+        </div>
+
+<!--        <div class="col-9 justify-contenx-end">-->
+<!--            <form action="/book/list">-->
+<!--                <div class="my-3 d-flex float-left">-->
+<!--                    <div class="mx-1">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filter"-->
+<!--                             viewBox="0 0 16 16">-->
+<!--                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                    <div class="col-3 mx-1">-->
+<!--                        <select class="form-control" name="sort">-->
+<!--                            <option value="name">Name</option>-->
+<!--                            <option value="price">Price</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <input class="mx-1" type="radio" name="dir" value="asc">Ascending-->
+<!--                        <input class="mx-1" type="radio" name="dir" value="desc">Descending-->
+<!--                        <input class="btn btn-info mx-1" type="submit" value="Sort">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+
+    </div>
+    <div class="notify">
+        <div th:if="${success}">
+            <span style="color: darkcyan" th:text="${success}"></span>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr style="background-color: #069A8E;color: white">
+            <th class="col-1">#</th>
+            <th class="col-1">ID</th>
+            <th class="col-3">Name</th>
+            <th class="col-2">Quantity</th>
+            <th class="col-3">Action</th>
+            <!--            <th>Delete</th>-->
+            <!--            <th>View</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book,loop : ${bookList}">
+            <td th:text="${loop.count}+(${bookList.number}*5)"></td>
+            <td th:text="${book.id}"></td>
+            <td>
+                <a th:href="@{/book/{id}/view(id=${book.getId()})}">
+                    <span th:text="${book.name}"></span>
+                </a>
+
+            </td>
+            <td th:text="${book.quantity}"></td>
+<!--            <td><a class="btn btn-warning" th:href="@{/product/{id}/edit(id=${product.getId()})}">edit</a>-->
+<!--                <a class="btn btn-danger" th:href="@{/product/{id}/delete(id=${product.getId()})}">delete</a>-->
+<!--            </td>-->
+            <!--            <td><a class="btn btn-info" th:href="@{/product/{id}/view(id=${product.getId()})}">view</a></td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="d-block m-3 justify-content-center">
+    <div class="text-center">
+        <span th:text="${bookList.number + 1}"></span>/
+        <span style="font-weight: bold" th:text="${bookList.totalPages}"></span> pages
+    </div>
+    <div class="text-center">
+        <a class="btn btn-info"
+           th:attrappend="class=${!bookList.hasPrevious()?' disabled':''}"
+           th:href="@{list(page=${bookList.number - 1})}"><i
+
+                class="fas fa-chevron-left"></i></a>
+
+        <a class="btn btn-info" th:attrappend="class=${!bookList.hasNext()?' disabled':''}"
+           th:href="@{list(page=${bookList.number + 1})}"><i
+                class="fas fa-chevron-right"></i></a>
+
+        <!--        <a class="btn btn-info" th:if="${blogList.hasNext()}" th:href="@{list(page=${blogList.number + 1},keyword=${createDate},sort=${sortBy})}"><i-->
+        <!--                class="fas fa-chevron-right"></i></a>-->
+    </div>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
