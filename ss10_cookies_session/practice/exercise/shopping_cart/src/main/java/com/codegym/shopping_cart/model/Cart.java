@@ -68,7 +68,6 @@ public class Cart {
 
     public void removeProduct(Product product) {
         products.remove(product);
-
     }
 
     public Integer countProductQuantity() {
