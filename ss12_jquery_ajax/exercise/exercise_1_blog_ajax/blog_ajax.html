@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List student momo</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+<script>
+    let blogObj = {
+        title: 'aa',
+        author: 'aa',
+        content: 'aa',
+        createDate: '2021-07-01'
+    };
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "GET", //GET, DELETE, PUT...
+        url: "http://localhost:8080/blogRest/list-blog",
+        data: JSON.stringify(blogObj),
+        success: function (resultSuccess) {
+            console.log(resultSuccess);
+        },
+        error: function (resultError) {
+            console.log(resultError);
+        }
+    });
+</script>
+</body>
+</html>
+<script src="jquery-3.6.0.min.js"></script>
+
+<script
+
+        type="text/javascript">
+
+</script>
+
+
+
+<script crossorigin="anonymous"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
