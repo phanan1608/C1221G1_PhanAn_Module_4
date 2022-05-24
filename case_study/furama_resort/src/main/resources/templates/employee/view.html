@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout :: external_css}">
+    </th:block>
+    <link rel="stylesheet" href="../../static/css/card.css">
+</head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+<div class="d-flex justify-content-center mt-3 text-center">
+    <a class="" href="/customer/list">
+        <h5 style="color: white;">Back to customer list</h5></a>
+</div>
+
+<div class="container">
+
+    <div id="logo"><h1 class="logo"></h1>
+        <div class="CTA">
+            <h1 style="font-size: 1rem">Customer</h1>
+        </div>
+    </div>
+    <div class="leftbox">
+        <nav>
+            <a id="profile" class="active"><i class="fa fa-user"></i></a>
+            <a id="payment"><i class="fa fa-credit-card"></i></a>
+            <a id="subscription"><i class="fa fa-tv"></i></a>
+            <a id="privacy"><i class="fa fa-tasks"></i></a>
+            <a id="settings"><i class="fa fa-cog"></i></a>
+        </nav>
+    </div>
+    <div class="right_box">
+        <div class="profile">
+            <img
+                    th:src="@{${customer.urlImage}}"
+                    alt=""
+                    style="width: 80px; height: 80px"
+                    class="rounded-circle my-3"
+            />
+            <h1 th:text="${customer.customerName}">Customer Info</h1>
+<!--            -->
+<!--            <h2>Full Name</h2>-->
+<!--            <p th:text="${customer.customerName}">-->
+            <h2>Birthday</h2>
+            <p th:text="${customer.customerBirthday}"></p>
+            <h2>Gender</h2>
+            <th:block th:if="${customer.customerGender eq 0}">
+                <p th:text="Female"></p>
+            </th:block>
+            <th:block th:if="${customer.customerGender eq 1}">
+                <p th:text="Male"></p>
+            </th:block>
+            <h2>Phone</h2>
+            <p th:text="${customer.customerPhone}"></p>
+            <h2>ID Card</h2>
+            <p th:text="${customer.customerIdCard}"></p>
+            <h2>Email</h2>
+            <p th:text="${customer.customerEmail}"></p>
+            <h2>Address</h2>
+            <p th:text="${customer.customerAddress}"></p>
+            <h2>Customer Type</h2>
+            <p th:text="${customer.customerType.customerTypeName}"></p>
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+<th:block th:replace="layout::external_js">
+</th:block>
+</html>

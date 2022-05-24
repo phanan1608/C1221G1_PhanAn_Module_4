@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout :: external_css}">
+    </th:block>
+</head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+
+<div class="container-fluid">
+    <div class="col-5 mx-auto">
+        <div class="text-center pt-3">
+            <h3 style="color: #3FB6A8">Create Customer</h3>
+        </div>
+        <p class="text-center">
+            <a th:href="@{/customer/list}">
+                Back to Customer list
+            </a>
+        </p>
+        <form th:action="@{/customer/save}" th:object="${customerDto}"
+              method="POST" novalidate="novalidate">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example1" class="form-control" th:field="*{customerName}"/>
+                        <label class="form-label" for="form3Example1">Full name</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="date" id="form3Example2" class="form-control" th:field="*{customerBirthday}"/>
+                        <label class="form-label" for="form3Example2">Birthday</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <div>
+                        <select class="form-control" id="exampleFormControlSelect1" th:field="*{customerGender}">
+                            <option value="%">--Choose Gender--</option>
+                            <option value="0">Female</option>
+                            <option value="1">Male</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example4" class="form-control" th:field="*{customerIdCard}"/>
+                        <label class="form-label" for="form3Example4">ID Card</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example5" class="form-control" th:field="*{customerPhone}"/>
+                        <label class="form-label" for="form3Example5">Phone</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-5">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example6" class="form-control" th:field="*{customerEmail}"/>
+                        <label class="form-label" for="form3Example6">Email</label>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example7" class="form-control" th:field="*{customerAddress}"/>
+                        <label class="form-label" for="form3Example7">Address</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Email input -->
+            <div class="mb-4">
+                <div class="form-outline">
+                    <input type="text" id="form3Example8" class="form-control" th:field="*{urlImage}"/>
+                    <label class="form-label" for="form3Example8">Image</label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect2" th:field="*{customerType}">
+                        <option value="%">---Choose Customer Type---</option>
+                        <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
+                                th:text="${type.customerTypeName}"></option>
+
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="col-2 mx-auto">
+                <button type="submit" class=" btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div th:replace="~{layout :: footer}"></div>
+
+</body>
+<th:block th:replace="layout::external_js">
+</th:block>
+</html>
