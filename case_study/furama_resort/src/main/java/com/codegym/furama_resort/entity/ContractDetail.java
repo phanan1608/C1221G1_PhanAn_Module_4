@@ -1,5 +1,8 @@
 package com.codegym.furama_resort.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +14,7 @@ public class ContractDetail {
 
     @ManyToOne
     @JoinColumn(name = "contract_id",referencedColumnName = "contractId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Contract contract;
 
     @ManyToOne
@@ -19,6 +23,8 @@ public class ContractDetail {
 
     public ContractDetail() {
     }
+
+
 
     public ContractDetail(Integer contract_detail_id, Integer quantity, Contract contract, AttachService attachService) {
         this.contract_detail_id = contract_detail_id;
@@ -58,4 +64,5 @@ public class ContractDetail {
     public void setAttachService(AttachService attachService) {
         this.attachService = attachService;
     }
+
 }

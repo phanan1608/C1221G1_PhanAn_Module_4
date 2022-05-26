@@ -80,9 +80,7 @@ ul {
 /*    color: #fff;*/
 /*    font-size: 15px;;*/
 /*}*/
-td{
-    word-break: break-all;
-}
+
 
 .btn:hover {
     opacity: 0.9;

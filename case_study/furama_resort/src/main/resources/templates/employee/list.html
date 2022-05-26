@@ -13,7 +13,7 @@
 <div class="container-fluid  col-9">
 
     <div class="text-center p-3">
-        <h3 style="color: #3FB6A8">Customer Management</h3>
+        <h3 style="color: #3FB6A8">Employee Management</h3>
         <div class="notify">
             <div th:if="${msg}">
                 <span style="color: darkcyan" th:text="${msg}"></span>
@@ -23,30 +23,19 @@
     <div class="d-flex justify-content-between">
         <div>
             <p>
-                <a class="btn btn-primary" th:href="@{/customer/create}">
-                    Add new customer
+                <a class="btn btn-primary" th:href="@{/employee/create}">
+                    Add new employee
                 </a>
             </p>
         </div>
         <div>
-            <form action="/customer/list">
+            <form action="/employee/list">
                 <div class="input-group">
                     <div class="form-outline">
-                        <input id="search-name" type="search" name="name" class="form-control" />
+                        <input id="search-name" type="search" name="name" class="form-control"/>
                         <label class="form-label" for="search-name">Name</label>
                     </div>
-                    <div class="form-outline">
-                        <input id="search-phone" type="search" name="phone" class="form-control" />
-                        <label class="form-label" for="search-phone">Phone</label>
-                    </div>
-                    <div class="">
-                        <select class="form-control" name="type" id="">
-                            <option value="-1">---Choose Customer Type---</option>
-                            <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
-                                    th:text="${type.customerTypeName}"></option>
 
-                        </select>
-                    </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i>
                     </button>
@@ -59,60 +48,54 @@
     <table class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
         <tr style="background-color: #3FB6A8;color: white">
-            <th class="col-3">Name</th>
-            <th>Contact</th>
+            <th class="col-4">Name</th>
+            <th class="col-1">Contact</th>
             <th>Birthday</th>
-            <th>Gender</th>
+            <th>Salary</th>
+            <th>Education</th>
             <th>ID Card</th>
-            <th>Address</th>
-            <th class="col-2">Actions</th>
+            <th class="col-2">Address</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="customer,loop : ${customerList}">
+        <tr th:each="employee,loop : ${employeeList}">
             <td>
                 <div class="d-flex align-items-center">
                     <img
-                            th:src="@{${customer.urlImage}}"
+                            th:src="@{${employee.urlImage}}"
                             alt=""
                             style="width: 45px; height: 45px"
                             class="rounded-circle"
                     />
                     <div class="ms-3">
-                        <a th:href="@{/customer/view/{id}(id=${customer.customerId})}">
-                            <p style="word-break: break-all;" class="fw-bold mb-1" th:text="${customer.customerName}"></p>
+                        <a th:href="@{/employee/view/{id}(id=${employee.employeeId})}">
+                            <p style="word-break: break-all;" class="fw-bold mb-1"
+                               th:text="${employee.employeeName}"></p>
                         </a>
-                        <th:block th:switch="${customer.customerType.customerTypeId}">
-                            <span th:case="1" class="badge rounded-pill badge-secondary"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="2" class="badge rounded-pill badge-primary"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="3" class="badge rounded-pill badge-warning"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="4" class="badge rounded-pill badge-success"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="*" class="badge rounded-pill badge-light"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                        </th:block>
+                        <p class="text-muted mb-0" th:text="${employee.employeeId}"></p>
+                        <div>
+                           <span class="badge rounded-pill badge-primary"
+                                 th:text="${employee.position.positionName}"></span>
+                            <span class="badge rounded-pill badge-warning"
+                                  th:text="${employee.division.divisionName}"></span>
+                        </div>
 
                     </div>
                 </div>
             </td>
             <td>
-                <p class="fw-normal mb-1" th:text="${customer.customerPhone}"></p>
-                <p class="text-muted mb-0" th:text="${customer.customerEmail}"></p>
+                <p class="fw-normal mb-1" th:text="${employee.employeePhone}"></p>
+                <p class="text-muted mb-0" th:text="${employee.employeeEmail}"></p>
             </td>
-            <td th:text="${customer.customerBirthday}"></td>
-            <th:block th:if="${customer.customerGender eq 0}">
-                <td th:text="Female"></td>
-            </th:block>
-            <th:block th:if="${customer.customerGender eq 1}">
-                <td th:text="Male"></td>
-            </th:block>
-            <td th:text="${customer.customerIdCard}"></td>
-            <td th:text="${customer.customerAddress}"></td>
+            <td th:text="${employee.employeeBirthday}"></td>
+            <td th:text="${#numbers.formatDecimal(employee.employeeSalary, 0, 'COMMA', 0, 'POINT')}"></td>
+            <td th:text="${employee.educationDegree.educationDegreeName}"></td>
+
+            <td th:text="${employee.employeeIdCard}"></td>
+            <td th:text="${employee.employeeAddress}"></td>
             <td>
-                <a class="btn btn-warning" th:href="@{/customer/edit/{id}(id=${customer.customerId})}">
+                <a class="btn btn-warning" th:href="@{/employee/edit/{id}(id=${employee.employeeId})}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -122,7 +105,7 @@
                 </a>
 
                 <button
-                        th:attr="onclick=|deleteModal('${customer.customerId}', '${customer.customerName}')|"
+                        th:attr="onclick=|deleteModal('${employee.employeeId}', '${employee.employeeName}')|"
                         type="button" class="btn btn-danger" data-toggle="modal"
                         data-target="#exampleModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -154,28 +137,28 @@
             <nav th:fragment="pagination" aria-label="Page navigation example"
                  style="width: initial">
                 <ul class="pagination">
-                    <li class="page-item" th:attrappend="class=${!customerList.hasPrevious() ? ' disabled' : ''}">
+                    <li class="page-item" th:attrappend="class=${!employeeList.hasPrevious() ? ' disabled' : ''}">
                         <a class="page-link"
-                           th:attrappend="class=${!customerList.hasPrevious() ? ' disabled' : ''}"
-                           th:href="@{list(page=${customerList.number - 1}, keyword=${name_keyword})}">
+                           th:attrappend="class=${!employeeList.hasPrevious() ? ' disabled' : ''}"
+                           th:href="@{list(page=${employeeList.number - 1}, name=${name_keyword})}">
                             Previous
                             <!--                            <i class="fas fa-chevron-left"></i>-->
                         </a>
                     </li>
                     <li class="page-item disabled">
-                        <a class="page-link disabled" href="#" th:text="${customerList.number + 1}"></a>
+                        <a class="page-link disabled" href="#" th:text="${employeeList.number + 1}"></a>
                     </li>
                     <li class="page-item disabled">
                         <a class="page-link disabled" href="#">/</a>
                     </li>
                     <li class="page-item disabled">
-                        <a class="page-link disabled" href="#" th:text="${customerList.totalPages}"></a>
+                        <a class="page-link disabled" href="#" th:text="${employeeList.totalPages}"></a>
                     </li>
                     <span>&nbsp;</span>
-                    <li class="page-item" th:attrappend="class=${!customerList.hasNext() ? ' disabled' : ''}">
+                    <li class="page-item" th:attrappend="class=${!employeeList.hasNext() ? ' disabled' : ''}">
                         <a class="page-link"
-                           th:attrappend="class=${!customerList.hasNext() ? ' disabled' : ''}"
-                           th:href="@{list(page=${customerList.number + 1}, keyword=${name_keyword})}">
+                           th:attrappend="class=${!employeeList.hasNext() ? ' disabled' : ''}"
+                           th:href="@{list(page=${employeeList.number + 1}, name=${name_keyword})}">
                             Next
                             <!--                            <i class="fas fa-chevron-right"></i>-->
                         </a>
@@ -195,11 +178,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form th:action="@{/customer/delete}" method="post">
+            <form th:action="@{/employee/delete}" method="post">
                 <div class="modal-body">
-                    <h5 style="color: #3FB6A8">Do you want to delete Customer with information: </h5>
-                    <div id="customer_id"></div>
-                    <div id="customer_name"></div>
+                    <h5 style="color: #3FB6A8">Do you want to delete Employee with information: </h5>
+                    <div id="employee_id"></div>
+                    <div id="employee_name"></div>
                     <input type="hidden" name="id" id="id_delete">
                 </div>
                 <div class="modal-footer">
@@ -213,8 +196,8 @@
 <script>
     function deleteModal(id, name) {
         document.getElementById("id_delete").value = id;
-        document.getElementById("customer_id").innerText = "id: " + id;
-        document.getElementById("customer_name").innerText = "name: " + name;
+        document.getElementById("employee_id").innerText = "id: " + id;
+        document.getElementById("employee_name").innerText = "name: " + name;
     }
 </script>
 <div th:replace="~{layout :: footer}"></div>

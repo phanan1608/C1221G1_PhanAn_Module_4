@@ -10,42 +10,29 @@
 <header th:replace="~{layout :: header}"></header>
 
 <div class="container-fluid">
-
-    <!--    <div id="form" >-->
-    <!--        <form th:action="@{/song/save}" th:object="${customerDto}"-->
-    <!--              method="POST" novalidate="novalidate">-->
-    <!--            <input type="hidden" th:field="*{customerId}"/>-->
-    <!--            <div class="form-group">-->
-    <!--                <label>Name</label>-->
-    <!--                <input class="form-control" type="text" th:field="*{customerName}"/>-->
-    <!--&lt;!&ndash;                <p style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{customerName}"></p>&ndash;&gt;-->
-    <!--            </div>-->
-    <!--            -->
-    <!--        </form>-->
-    <!--    </div>-->
-    <div class="col-5 mx-auto" >
+    <div class="col-5 mx-auto">
         <div class="text-center pt-3">
-            <h3 style="color: #069A8E">Update Customer</h3>
+            <h3 style="color: #3FB6A8">Update Employee</h3>
         </div>
         <p class="text-center">
-            <a th:href="@{/customer/list}">
-                Back to Customer list
+            <a th:href="@{/employee/list}">
+                Back to Employee list
             </a>
         </p>
-        <form th:action="@{/customer/update}" th:object="${customerDto}"
+        <form th:action="@{/employee/update}" th:object="${employeeDto}"
               method="POST" novalidate="novalidate">
             <!-- 2 column grid layout with text inputs for the first and last names -->
-            <input type="hidden" th:field="*{customerId}">
+            <input type="hidden" th:field="*{employeeId}">
             <div class="row mb-4">
                 <div class="col">
                     <div class="form-outline">
-                        <input type="text" id="form3Example1" class="form-control" th:field="*{customerName}"/>
+                        <input type="text" id="form3Example1" class="form-control" th:field="*{employeeName}"/>
                         <label class="form-label" for="form3Example1">Full name</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        <input type="date" id="form3Example2" class="form-control" th:field="*{customerBirthday}"/>
+                        <input type="date" id="form3Example2" class="form-control" th:field="*{employeeBirthday}"/>
                         <label class="form-label" for="form3Example2">Birthday</label>
                     </div>
                 </div>
@@ -53,23 +40,20 @@
 
             <div class="row mb-4">
                 <div class="col">
-                    <div>
-                        <select class="form-control" id="exampleFormControlSelect1" th:field="*{customerGender}">
-                            <option value="">--Choose Gender--</option>
-                            <option value="0">Female</option>
-                            <option value="1">Male</option>
-                        </select>
+                    <div class="form-outline">
+                        <input type="text" id="form4Example4" class="form-control" th:field="*{employeeSalary}"/>
+                        <label class="form-label" for="form4Example4">Salary</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        <input type="text" id="form3Example4" class="form-control" th:field="*{customerIdCard}"/>
+                        <input type="text" id="form3Example4" class="form-control" th:field="*{employeeIdCard}"/>
                         <label class="form-label" for="form3Example4">ID Card</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        <input type="text" id="form3Example5" class="form-control" th:field="*{customerPhone}"/>
+                        <input type="text" id="form3Example5" class="form-control" th:field="*{employeePhone}"/>
                         <label class="form-label" for="form3Example5">Phone</label>
                     </div>
                 </div>
@@ -78,13 +62,13 @@
             <div class="row mb-4">
                 <div class="col-5">
                     <div class="form-outline">
-                        <input type="text" id="form3Example6" class="form-control" th:field="*{customerEmail}"/>
+                        <input type="text" id="form3Example6" class="form-control" th:field="*{employeeEmail}"/>
                         <label class="form-label" for="form3Example6">Email</label>
                     </div>
                 </div>
                 <div class="col-7">
                     <div class="form-outline">
-                        <input type="text" id="form3Example7" class="form-control" th:field="*{customerAddress}"/>
+                        <input type="text" id="form3Example7" class="form-control" th:field="*{employeeAddress}"/>
                         <label class="form-label" for="form3Example7">Address</label>
                     </div>
                 </div>
@@ -92,22 +76,43 @@
 
 
             <!-- Email input -->
-            <div class="mb-4">
-                <div class="form-outline">
-                    <input type="text" id="form3Example8" class="form-control" th:field="*{urlImage}"/>
-                    <label class="form-label" for="form3Example8">Image</label>
+            <div class="row mb-4">
+                <div class="col-7">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example8" class="form-control" th:field="*{urlImage}"/>
+                        <label class="form-label" for="form3Example8">Image</label>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="">
+                        <select class="form-control" th:field="*{educationDegree}">
+                            <option value="">---Choose Education---</option>
+                            <option th:each="education:${educationDegreeList}" th:value="${education.educationDegreeId}"
+                                    th:text="${education.educationDegreeName}"></option>
+
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="mb-4">
-                <div class="form-group">
-                    <select class="form-control" id="exampleFormControlSelect2" th:field="*{customerType}">
-                        <option value="">---Choose Customer Type---</option>
-                        <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
-                                th:text="${type.customerTypeName}"></option>
+            <div class="row mb-4">
+                <div class="col">
+                    <select class="form-control" th:field="*{position}">
+                        <option value="">---Choose Position---</option>
+                        <option th:each="position:${positionList}" th:value="${position.positionId}"
+                                th:text="${position.positionName}"></option>
 
                     </select>
                 </div>
+                <div class="col">
+                    <select class="form-control" th:field="*{division}">
+                        <option value="">---Choose Division---</option>
+                        <option th:each="division:${divisionList}" th:value="${division.divisionId}"
+                                th:text="${division.divisionName}"></option>
+
+                    </select>
+                </div>
+
             </div>
 
             <!-- Submit button -->

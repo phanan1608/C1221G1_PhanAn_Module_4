@@ -12,104 +12,91 @@
 <div class="container-fluid">
     <div class="col-5 mx-auto">
         <div class="text-center pt-3">
-            <h3 style="color: #3FB6A8">Create Employee</h3>
+            <h3 style="color: #3FB6A8">Create Contract</h3>
         </div>
         <p class="text-center">
-            <a th:href="@{/employee/list}">
-                Back to Employee list
+            <a th:href="@{/contract/list}">
+                Back to Contract list
             </a>
         </p>
-        <form th:action="@{/employee/save}" th:object="${employeeDto}"
+        <form th:action="@{/contract/save}" th:object="${contractDto}"
               method="POST" novalidate="novalidate">
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row mb-4">
                 <div class="col">
                     <div class="form-outline">
-                        <input type="text" id="form3Example1" class="form-control" th:field="*{employeeName}"/>
-                        <label class="form-label" for="form3Example1">Full name</label>
+                        <input type="date" id="form3Example1" class="form-control" th:field="*{contractStartDate}"/>
+                        <label class="form-label" for="form3Example1">Start Date</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('contractStartDate')}"
+                           th:errors="*{contractStartDate}"></small>
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        <input type="date" id="form3Example2" class="form-control" th:field="*{employeeBirthday}"/>
-                        <label class="form-label" for="form3Example2">Birthday</label>
+                        <input type="date" id="form3Example2" class="form-control" th:field="*{contractEndDate}"/>
+                        <label class="form-label" for="form3Example2">End Date</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('contractEndDate')}"
+                           th:errors="*{contractEndDate}"></small>
                 </div>
             </div>
 
             <div class="row mb-4">
                 <div class="col">
                     <div class="form-outline">
-                        <input type="text" id="form4Example4" class="form-control" th:field="*{employeeSalary}"/>
-                        <label class="form-label" for="form4Example4">Salary</label>
+                        <input type="text" id="form4Example4" class="form-control" th:field="*{contractDeposit}"/>
+                        <label class="form-label" for="form4Example4">Deposit</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('contractDeposit')}"
+                           th:errors="*{contractDeposit}"></small>
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        <input type="text" id="form3Example4" class="form-control" th:field="*{employeeIdCard}"/>
-                        <label class="form-label" for="form3Example4">ID Card</label>
+                        <input type="text" id="form3Example4" class="form-control" th:field="*{contractTotalMoney}"/>
+                        <label class="form-label" for="form3Example4">Total money</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('contractTotalMoney')}"
+                           th:errors="*{contractTotalMoney}"></small>
                 </div>
+
+            </div>
+
+
+
+            <div class="row mb-4">
                 <div class="col">
-                    <div class="form-outline">
-                        <input type="text" id="form3Example5" class="form-control" th:field="*{employeePhone}"/>
-                        <label class="form-label" for="form3Example5">Phone</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-5">
-                    <div class="form-outline">
-                        <input type="text" id="form3Example6" class="form-control" th:field="*{employeeEmail}"/>
-                        <label class="form-label" for="form3Example6">Email</label>
-                    </div>
-                </div>
-                <div class="col-7">
-                    <div class="form-outline">
-                        <input type="text" id="form3Example7" class="form-control" th:field="*{employeeAddress}"/>
-                        <label class="form-label" for="form3Example7">Address</label>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Email input -->
-            <div class="row mb-4">
-                <div class="col-7">
-                    <div class="form-outline">
-                        <input type="text" id="form3Example8" class="form-control" th:field="*{urlImage}"/>
-                        <label class="form-label" for="form3Example8">Image</label>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div class="">
-                        <select class="form-control" th:field="*{educationDegree}">
-                            <option value="">---Choose Education---</option>
-                            <option th:each="education:${educationDegreeList}" th:value="${education.educationDegreeId}"
-                                    th:text="${education.educationDegreeName}"></option>
-
+                        <select class="form-select" th:field="*{employee}">
+                            <option value="">---Choose Employee---</option>
+                            <option th:each="employee:${employeeList}" th:value="${employee.employeeId}"
+                                    th:text="${employee.employeeName}"></option>
                         </select>
-                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('employee')}"
+                           th:errors="*{employee}"></small>
                 </div>
+
             </div>
 
             <div class="row mb-4">
                 <div class="col">
-                        <select class="form-control" th:field="*{position}">
-                            <option value="">---Choose Position---</option>
-                            <option th:each="position:${positionList}" th:value="${position.positionId}"
-                                    th:text="${position.positionName}"></option>
-
-                        </select>
+                    <select class="form-select" th:field="*{customer}">
+                        <option value="">---Choose Customer---</option>
+                        <option th:each="customer:${customerList}" th:value="${customer.customerId}"
+                                th:text="${customer.customerName}"></option>
+                    </select>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customer')}"
+                           th:errors="*{customer}"></small>
                 </div>
-                <div class="col">
-                        <select class="form-control" th:field="*{division}">
-                            <option value="">---Choose Division---</option>
-                            <option th:each="division:${divisionList}" th:value="${division.divisionId}"
-                                    th:text="${division.divisionName}"></option>
 
-                        </select>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <select class="form-select" th:field="*{service}">
+                        <option value="">---Choose Facility---</option>
+                        <option th:each="facility:${facilityList}" th:value="${facility.serviceId}"
+                                th:text="${facility.serviceName}"></option>
+                    </select>
+                    <small style="color: red;" th:if="${#fields.hasErrors('service')}"
+                           th:errors="*{service}"></small>
                 </div>
 
             </div>

@@ -1,6 +1,10 @@
 package com.codegym.furama_resort.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Contract {
@@ -11,6 +15,9 @@ public class Contract {
     private String contractEndDate;
     private Double contractDeposit;
     private Double contractTotalMoney;
+
+    @OneToMany(mappedBy = "contract")
+    private List<ContractDetail> contractDetailList;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
@@ -100,5 +107,14 @@ public class Contract {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public List<ContractDetail> getContractDetailList() {
+        return contractDetailList;
+    }
+
+
+    public void setContractDetailList(List<ContractDetail> contractDetailList) {
+        this.contractDetailList = contractDetailList;
     }
 }

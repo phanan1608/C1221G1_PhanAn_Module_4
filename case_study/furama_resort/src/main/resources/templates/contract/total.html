@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout :: external_css}">
+
+    </th:block>
+
+</head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+<div class="container-fluid  col-9">
+
+    <div class="text-center p-3">
+        <h3 style="color: #3FB6A8">List Management</h3>
+        <div class="notify">
+            <div th:if="${msg}">
+                <span style="color: darkcyan" th:text="${msg}"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+        <tr style="background-color: #3FB6A8;color: white">
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Customer Type</th>
+            <th scope="col">Service</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Attach Service</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj,loop : ${totalList}">
+            <td th:text="${obj.customerId}"></td>
+            <td th:text="${obj.customerName}"></td>
+            <td th:text="${obj.customerTypeName}"></td>
+            <td th:text="${obj.serviceName}"></td>
+            <td th:text="${obj.startDate}"></td>
+            <td th:text="${obj.endDate}"></td>
+            <td th:text="${obj.attachServiceName}"></td>
+            <td th:text="${#numbers.formatDecimal(obj.total, 0, 'COMMA', 0, 'POINT')}"></td>
+
+
+
+        </tr>
+        </tbody>
+    </table>
+    <!--    <div class="d-block m-3 justify-content-center">-->
+    <!--        <div class="text-center">-->
+    <!--            <a class="btn btn-light"-->
+    <!--               th:attrappend="class=${!customerList.hasPrevious()?' disabled':''}"-->
+    <!--               th:href="@{list(page=${customerList.number - 1}, keyword=${name_keyword})}"><i-->
+
+    <!--                    class="fas fa-chevron-left"></i></a>-->
+    <!--            <a th:text="${customerList.number + 1}"></a>/-->
+    <!--            <a style="font-weight: bold" th:text="${customerList.totalPages}"></a>-->
+    <!--            <a class="btn btn-light"-->
+    <!--               th:attrappend="class=${!customerList.hasNext()?' disabled':''}"-->
+    <!--               th:href="@{list(page=${customerList.number + 1}, keyword=${name_keyword})}"><i-->
+    <!--                    class="fas fa-chevron-right"></i></a>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="m-3">
+        <div class="row d-flex justify-content-center">
+            <nav th:fragment="pagination" aria-label="Page navigation example"
+                 style="width: initial">
+                <ul class="pagination">
+                    <li class="page-item" th:attrappend="class=${!totalList.hasPrevious() ? ' disabled' : ''}">
+                        <a class="page-link"
+                           th:attrappend="class=${!totalList.hasPrevious() ? ' disabled' : ''}"
+                           th:href="@{total-list(page=${totalList.number - 1})}">
+
+                            Previous
+                            <!--                            <i class="fas fa-chevron-left"></i>-->
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link disabled" href="#" th:text="${totalList.number + 1}"></a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link disabled" href="#">/</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link disabled" href="#" th:text="${totalList.totalPages}"></a>
+                    </li>
+                    <span>&nbsp;</span>
+                    <li class="page-item" th:attrappend="class=${!totalList.hasNext() ? ' disabled' : ''}">
+                        <a class="page-link"
+                           th:attrappend="class=${!totalList.hasNext() ? ' disabled' : ''}"
+                           th:href="@{total-list(page=${totalList.number + 1})}">
+                            Next
+                            <!--                            <i class="fas fa-chevron-right"></i>-->
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layout :: footer}"></div>
+</body>
+<th:block th:replace="layout::external_js">
+</th:block>
+</html>

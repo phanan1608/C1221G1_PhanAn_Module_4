@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout :: external_css}">
+    </th:block>
+</head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+
+<div class="container-fluid">
+    <div class="col-5 mx-auto">
+        <div class="text-center pt-3">
+            <h3 style="color: #3FB6A8">Create Contract Detail</h3>
+        </div>
+        <p class="text-center">
+            <a th:href="@{/contract/list}">
+                Back to Contract list
+            </a>
+        </p>
+        <form action="/contract/saveContractDetail" th:object="${contractDetailDto}"
+              method="POST" novalidate="novalidate">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <input type="hidden"  th:field="*{contract}"/>
+            <div class="row mb-4">
+                <div class="col">
+                    <select class="form-select" th:field="*{attachService}">
+                        <option value="">---Choose Attach Service---</option>
+                        <option th:each="attach:${attachServiceList}" th:value="${attach.attachServiceId}"
+                                th:text="${attach.attachServiceName}"></option>
+                    </select>
+                    <small style="color: red;" th:if="${#fields.hasErrors('attachService')}"
+                           th:errors="*{attachService}"></small>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="number" id="form3Example1" class="form-control" th:field="*{quantity}"/>
+                        <label class="form-label" for="form3Example1">Quantity</label>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('quantity')}"
+                           th:errors="*{quantity}"></small>
+                </div>
+
+            </div>
+
+
+            <!-- Submit button -->
+            <div class="col-2 mx-auto">
+                <button type="submit" class=" btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div th:replace="~{layout :: footer}"></div>
+
+</body>
+<th:block th:replace="layout::external_js">
+</th:block>
+</html>

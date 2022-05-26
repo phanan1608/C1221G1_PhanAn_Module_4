@@ -10,15 +10,15 @@
 <body>
 <header th:replace="~{layout :: header}"></header>
 <div class="d-flex justify-content-center mt-3 text-center">
-    <a class="" href="/customer/list">
-        <h5 style="color: white;">Back to customer list</h5></a>
+    <a class="" href="/employee/list">
+        <h5 style="color: white;">Back to employee list</h5></a>
 </div>
 
-<div class="container">
+<div class="container" style="height: 820px">
 
     <div id="logo"><h1 class="logo"></h1>
         <div class="CTA">
-            <h1 style="font-size: 1rem">Customer</h1>
+            <h1 style="font-size: 1rem">Employee</h1>
         </div>
     </div>
     <div class="leftbox">
@@ -33,34 +33,35 @@
     <div class="right_box">
         <div class="profile">
             <img
-                    th:src="@{${customer.urlImage}}"
+                    th:src="@{${employee.urlImage}}"
                     alt=""
                     style="width: 80px; height: 80px"
                     class="rounded-circle my-3"
             />
-            <h1 th:text="${customer.customerName}">Customer Info</h1>
+            <h1 th:text="${employee.employeeName}">Customer Info</h1>
+
+            <h2>Position</h2>
+            <p th:text="${employee.position.positionName}"></p>
+            <h2>Division</h2>
+            <p th:text="${employee.division.divisionName}"></p>
+            <h2>Education</h2>
+            <p th:text="${employee.educationDegree.educationDegreeName}"></p>
 <!--            -->
 <!--            <h2>Full Name</h2>-->
 <!--            <p th:text="${customer.customerName}">-->
             <h2>Birthday</h2>
-            <p th:text="${customer.customerBirthday}"></p>
-            <h2>Gender</h2>
-            <th:block th:if="${customer.customerGender eq 0}">
-                <p th:text="Female"></p>
-            </th:block>
-            <th:block th:if="${customer.customerGender eq 1}">
-                <p th:text="Male"></p>
-            </th:block>
+            <p th:text="${employee.employeeBirthday}"></p>
+            <h2>Birthday</h2>
+            <p th:text="${#numbers.formatDecimal(employee.employeeSalary, 0, 'COMMA', 0, 'POINT')}"></p>
+
             <h2>Phone</h2>
-            <p th:text="${customer.customerPhone}"></p>
+            <p th:text="${employee.employeePhone}"></p>
             <h2>ID Card</h2>
-            <p th:text="${customer.customerIdCard}"></p>
+            <p th:text="${employee.employeeIdCard}"></p>
             <h2>Email</h2>
-            <p th:text="${customer.customerEmail}"></p>
+            <p th:text="${employee.employeeEmail}"></p>
             <h2>Address</h2>
-            <p th:text="${customer.customerAddress}"></p>
-            <h2>Customer Type</h2>
-            <p th:text="${customer.customerType.customerTypeName}"></p>
+            <p th:text="${employee.employeeAddress}"></p>
         </div>
 
 

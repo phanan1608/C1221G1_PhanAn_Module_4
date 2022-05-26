@@ -9,9 +9,9 @@ public interface ICrudService<E> {
 
     void save(E object);
 
-    E findById(int id);
+    E findById(String id);
 
     void update(E object);
 
-    void remove(int id);
+    void remove(String id);
 }

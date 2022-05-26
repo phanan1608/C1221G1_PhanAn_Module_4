@@ -1,10 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <th:block th:replace="~{layout :: external_css}">
+    </th:block>
 </head>
 <body>
-$END$
+<header th:replace="~{layout :: header}"></header>
+<div class="container-fluid">
+    <div class="col-5 mx-auto">
+        <div class="text-center pt-3">
+            <h3 style="color: #3FB6A8">Create Facility</h3>
+        </div>
+        <p class="text-center">
+            <a th:href="@{/facility/list}">
+                Back to Facility list
+            </a>
+        </p>
+        <form th:action="@{/facility/save}" th:object="${facilityDto}"
+              method="POST" novalidate="novalidate">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example1" class="form-control" th:field="*{serviceName}"/>
+                        <label class="form-label" for="form3Example1">Name</label>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('serviceName')}"
+                           th:errors="*{serviceName}"></small>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example2" class="form-control" th:field="*{serviceCost}"/>
+                        <label class="form-label" for="form3Example2">Cost</label>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('serviceCost')}"
+                           th:errors="*{serviceCost}"></small>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="number" id="form3Example3" class="form-control" th:field="*{serviceMaxPeople}"/>
+                        <label class="form-label" for="form3Example3">People</label>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('serviceMaxPeople')}"
+                           th:errors="*{serviceMaxPeople}"></small>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <select class="form-select" th:field="*{rentType}">
+                        <option value="">---Choose Rent Type---</option>
+                        <option th:each="type:${rentTypeList}" th:value="${type.rentTypeId}"
+                                th:text="${type.rentTypeName}"></option>
+                    </select>
+                    <small style="color: red;" th:if="${#fields.hasErrors('rentType')}"
+                           th:errors="*{rentType}"></small>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example4" class="form-control" th:field="*{serviceArea}"/>
+                        <label class="form-label" for="form3Example4">Area</label>
+                    </div><small style="color: red;" th:if="${#fields.hasErrors('serviceArea')}"
+                                 th:errors="*{serviceArea}"></small>
+                </div>
+
+            </div>
+
+
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example5" class="form-control"
+                               th:field="*{standardRoom}"/>
+                        <label class="form-label" for="formExample5">Standard Room</label>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('standardRoom')}"
+                           th:errors="*{standardRoom}"></small>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form3Example6" class="form-control"
+                               th:field="*{urlImage}"/>
+                        <label class="form-label" for="formExample6">URL Image</label>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('urlImage')}"
+                           th:errors="*{urlImage}"></small>
+                </div>
+
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <select id="service_select" class="form-select" th:field="*{serviceType}">
+                        <option value="">---Choose Service Type---</option>
+                        <option th:each="type:${facilityTypeList}" th:value="${type.serviceTypeId}"
+                                th:text="${type.serviceTypeName}"></option>
+                    </select>
+
+                    <small style="color: red;" th:if="${#fields.hasErrors('serviceType')}"
+                           th:errors="*{serviceType}"></small>
+                </div>
+            </div>
+            <div class="row mb-4" id="villa_items">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="formExample1" class="form-control"
+                               th:field="*{poolArea}"/>
+                        <label class="form-label" for="formExample1">Pool Area</label>
+                    </div>
+<!--                    <small style="color: red;" th:if="${#fields.hasErrors('poolArea')}"-->
+<!--                           th:errors="*{poolArea}"></small>-->
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="formExample2" class="form-control"
+                               th:field="*{numberOfFloor}"/>
+                        <label class="form-label" for="formExample2">Floor</label>
+                    </div>
+<!--                    <small style="color: red;" th:if="${#fields.hasErrors('numberOfFloor')}"-->
+<!--                           th:errors="*{numberOfFloor}"></small>-->
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="formExample3" class="form-control"
+                               th:field="*{descriptionOtherConvenience}"/>
+                        <label class="form-label" for="formExample3">Description</label>
+                    </div>
+<!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
+<!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
+                </div>
+            </div>
+            <div class="row mb-4" id="house_items">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="number" id="formExample4" class="form-control"
+                               th:field="*{numberOfFloor}"/>
+                        <label class="form-label" for="formExample4">Floor</label>
+                    </div>
+<!--                    <small style="color: red;" th:if="${#fields.hasErrors('numberOfFloor')}"-->
+<!--                           th:errors="*{numberOfFloor}"></small>-->
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="formExample5" class="form-control"
+                               th:field="*{descriptionOtherConvenience}"/>
+                        <label class="form-label" for="formExample5">Description</label>
+                    </div>
+<!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
+<!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
+                </div>
+            </div>
+            <div class="row mb-4" id="room_items">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="formExample6" class="form-control"
+                               th:field="*{descriptionOtherConvenience}"/>
+                        <label class="form-label" for="formExample6">Description</label>
+                    </div>
+<!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
+<!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
+                </div>
+            </div>
+
+
+            <!-- Submit button -->
+            <div class="col-2 mx-auto">
+                <button type="submit" class=" btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{layout :: footer}"></div>
 </body>
+<th:block th:replace="layout::external_js">
+</th:block>
 </html>
+
+
+<script>
+    $(document).ready(function () {
+        console.log($("#service_select"))
+        if ($("#service_select").value==undefined){
+            $("#villa_items").hide()
+            $("#house_items").hide()
+            $("#room_items").hide()
+            $("#villa_items").find("input").prop("disabled", true)
+            $("#house_items").find("input").prop("disabled", true)
+            $("#room_items").find("input").prop("disabled", true)
+        }
+
+
+        $("#service_select").change(function () {
+            if (this.value == 1) {
+                $("#villa_items").show()
+                $("#house_items").hide()
+                $("#room_items").hide()
+                $("#villa_items").find("input").prop("disabled", false).val("")
+                $("#house_items").find("input").prop("disabled", true).val("")
+                $("#room_items").find("input").prop("disabled", true).val("")
+            } else if (this.value == 2) {
+                $("#house_items").show()
+                $("#villa_items").hide()
+                $("#room_items").hide()
+                $("#house_items").find("input").prop("disabled", false).val("")
+                $("#villa_items").find("input").prop("disabled", true).val("")
+                $("#room_items").find("input").prop("disabled", true).val("")
+            } else if (this.value == 3) {
+                $("#room_items").show()
+                $("#villa_items").hide()
+                $("#house_items").hide()
+                $("#room_items").find("input").prop("disabled", false).val("")
+                $("#villa_items").find("input").prop("disabled", true).val("")
+                $("#house_items").find("input").prop("disabled", true).val("")
+            } else {
+                $("#room_items").hide()
+                $("#villa_items").hide()
+                $("#house_items").hide()
+                $("#room_items").find("input").prop("disabled", true).val("")
+                $("#villa_items").find("input").prop("disabled", true).val("")
+                $("#house_items").find("input").prop("disabled", true).val("")
+            }
+        })
+
+    })
+
+
+
+
+
+
+</script>

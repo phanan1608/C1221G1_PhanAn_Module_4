@@ -32,15 +32,15 @@
             <form action="/customer/list">
                 <div class="input-group">
                     <div class="form-outline">
-                        <input id="search-name" type="search" name="name" class="form-control" />
+                        <input id="search-name" type="search" name="name" class="form-control"/>
                         <label class="form-label" for="search-name">Name</label>
                     </div>
                     <div class="form-outline">
-                        <input id="search-phone" type="search" name="phone" class="form-control" />
+                        <input id="search-phone" type="search" name="phone" class="form-control"/>
                         <label class="form-label" for="search-phone">Phone</label>
                     </div>
                     <div class="">
-                        <select class="form-control" name="type" id="">
+                        <select class="form-select" name="type" id="">
                             <option value="-1">---Choose Customer Type---</option>
                             <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
                                     th:text="${type.customerTypeName}"></option>
@@ -80,8 +80,10 @@
                     />
                     <div class="ms-3">
                         <a th:href="@{/customer/view/{id}(id=${customer.customerId})}">
-                            <p class="fw-bold mb-1" th:text="${customer.customerName}"></p>
+                            <p style="word-break: break-all;" class="fw-bold mb-1"
+                               th:text="${customer.customerName}"></p>
                         </a>
+                        <p class="text-muted mb-0" th:text="${customer.customerId}"></p>
                         <th:block th:switch="${customer.customerType.customerTypeId}">
                             <span th:case="1" class="badge rounded-pill badge-secondary"
                                   th:text="${customer.customerType.customerTypeName}"></span>
@@ -157,7 +159,8 @@
                     <li class="page-item" th:attrappend="class=${!customerList.hasPrevious() ? ' disabled' : ''}">
                         <a class="page-link"
                            th:attrappend="class=${!customerList.hasPrevious() ? ' disabled' : ''}"
-                           th:href="@{list(page=${customerList.number - 1}, keyword=${name_keyword})}">
+                           th:href="@{list(page=${customerList.number - 1}, name=${name_keyword},phone=${phone_keyword},type=${type_keyword})}">
+
                             Previous
                             <!--                            <i class="fas fa-chevron-left"></i>-->
                         </a>
@@ -175,7 +178,7 @@
                     <li class="page-item" th:attrappend="class=${!customerList.hasNext() ? ' disabled' : ''}">
                         <a class="page-link"
                            th:attrappend="class=${!customerList.hasNext() ? ' disabled' : ''}"
-                           th:href="@{list(page=${customerList.number + 1}, keyword=${name_keyword})}">
+                           th:href="@{list(page=${customerList.number + 1}, name=${name_keyword},phone=${phone_keyword},type=${type_keyword})}">
                             Next
                             <!--                            <i class="fas fa-chevron-right"></i>-->
                         </a>

@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <th:block th:replace="~{layout :: external_css}">
-
     </th:block>
+    <style>
+        td{
+            font-weight: normal
+        }
+    </style>
 
 </head>
 <body>
@@ -13,7 +17,7 @@
 <div class="container-fluid  col-9">
 
     <div class="text-center p-3">
-        <h3 style="color: #3FB6A8">Customer Management</h3>
+        <h3 style="color: #3FB6A8">Facility Management</h3>
         <div class="notify">
             <div th:if="${msg}">
                 <span style="color: darkcyan" th:text="${msg}"></span>
@@ -23,200 +27,114 @@
     <div class="d-flex justify-content-between">
         <div>
             <p>
-                <a class="btn btn-primary" th:href="@{/customer/create}">
-                    Add new customer
+                <a class="btn btn-primary" th:href="@{/facility/create}">
+                    Add new Facility
                 </a>
             </p>
-        </div>
-        <div>
-            <form action="/customer/list">
-                <div class="input-group">
-                    <div class="form-outline">
-                        <input id="search-name" type="search" name="name" class="form-control" />
-                        <label class="form-label" for="search-name">Name</label>
-                    </div>
-                    <div class="form-outline">
-                        <input id="search-phone" type="search" name="phone" class="form-control" />
-                        <label class="form-label" for="search-phone">Phone</label>
-                    </div>
-                    <div class="">
-                        <select class="form-control" name="type" id="">
-                            <option value="-1">---Choose Customer Type---</option>
-                            <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
-                                    th:text="${type.customerTypeName}"></option>
-
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
-
         </div>
     </div>
 
     <table class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
         <tr style="background-color: #3FB6A8;color: white">
-            <th class="col-3">Name</th>
-            <th>Contact</th>
-            <th>Birthday</th>
-            <th>Gender</th>
-            <th>ID Card</th>
-            <th>Address</th>
-            <th class="col-2">Actions</th>
+            <th class="col-2">Name</th>
+            <th>Area</th>
+            <th>Cost</th>
+            <th>People</th>
+            <th>Rent Type</th>
+            <th>Service Type</th>
+            <th>Standard</th>
+            <th>Description</th>
+            <th>Pool Area</th>
+            <th>Floor</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="customer,loop : ${customerList}">
-            <td>
-                <div class="d-flex align-items-center">
-                    <img
-                            th:src="@{${customer.urlImage}}"
-                            alt=""
-                            style="width: 45px; height: 45px"
-                            class="rounded-circle"
-                    />
-                    <div class="ms-3">
-                        <a th:href="@{/customer/view/{id}(id=${customer.customerId})}">
-                            <p style="word-break: break-all;" class="fw-bold mb-1" th:text="${customer.customerName}"></p>
-                        </a>
-                        <th:block th:switch="${customer.customerType.customerTypeId}">
-                            <span th:case="1" class="badge rounded-pill badge-secondary"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="2" class="badge rounded-pill badge-primary"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="3" class="badge rounded-pill badge-warning"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="4" class="badge rounded-pill badge-success"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                            <span th:case="*" class="badge rounded-pill badge-light"
-                                  th:text="${customer.customerType.customerTypeName}"></span>
-                        </th:block>
-
-                    </div>
-                </div>
-            </td>
-            <td>
-                <p class="fw-normal mb-1" th:text="${customer.customerPhone}"></p>
-                <p class="text-muted mb-0" th:text="${customer.customerEmail}"></p>
-            </td>
-            <td th:text="${customer.customerBirthday}"></td>
-            <th:block th:if="${customer.customerGender eq 0}">
-                <td th:text="Female"></td>
-            </th:block>
-            <th:block th:if="${customer.customerGender eq 1}">
-                <td th:text="Male"></td>
-            </th:block>
-            <td th:text="${customer.customerIdCard}"></td>
-            <td th:text="${customer.customerAddress}"></td>
-            <td>
-                <a class="btn btn-warning" th:href="@{/customer/edit/{id}(id=${customer.customerId})}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd"
-                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                    </svg>
-                </a>
-
-                <button
-                        th:attr="onclick=|deleteModal('${customer.customerId}', '${customer.customerName}')|"
-                        type="button" class="btn btn-danger" data-toggle="modal"
-                        data-target="#exampleModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-trash-fill" viewBox="0 0 16 16">
-                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                    </svg>
-                </button>
-            </td>
+        <tr th:each="facility,loop : ${facilityList}">
+            <td th:text="${facility.serviceName}"></td>
+            <td th:text="${facility.serviceArea}"></td>
+            <td th:text="${facility.serviceCost}"></td>
+            <td th:text="${facility.serviceMaxPeople}"></td>
+            <td th:text="${facility.rentType.rentTypeName}"></td>
+            <td th:text="${facility.serviceType.serviceTypeName}"></td>
+            <td th:text="${facility.standardRoom}"></td>
+            <td th:text="${facility.descriptionOtherConvenience}"></td>
+            <td th:text="${facility.poolArea}"></td>
+            <td th:text="${facility.numberOfFloor}"></td>
         </tr>
         </tbody>
     </table>
-    <!--    <div class="d-block m-3 justify-content-center">-->
-    <!--        <div class="text-center">-->
-    <!--            <a class="btn btn-light"-->
-    <!--               th:attrappend="class=${!customerList.hasPrevious()?' disabled':''}"-->
-    <!--               th:href="@{list(page=${customerList.number - 1}, keyword=${name_keyword})}"><i-->
-
-    <!--                    class="fas fa-chevron-left"></i></a>-->
-    <!--            <a th:text="${customerList.number + 1}"></a>/-->
-    <!--            <a style="font-weight: bold" th:text="${customerList.totalPages}"></a>-->
-    <!--            <a class="btn btn-light"-->
-    <!--               th:attrappend="class=${!customerList.hasNext()?' disabled':''}"-->
-    <!--               th:href="@{list(page=${customerList.number + 1}, keyword=${name_keyword})}"><i-->
-    <!--                    class="fas fa-chevron-right"></i></a>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <div class="m-3">
-        <div class="row d-flex justify-content-center">
-            <nav th:fragment="pagination" aria-label="Page navigation example"
-                 style="width: initial">
-                <ul class="pagination">
-                    <li class="page-item" th:attrappend="class=${!customerList.hasPrevious() ? ' disabled' : ''}">
-                        <a class="page-link"
-                           th:attrappend="class=${!customerList.hasPrevious() ? ' disabled' : ''}"
-                           th:href="@{list(page=${customerList.number - 1}, keyword=${name_keyword})}">
-                            Previous
-                            <!--                            <i class="fas fa-chevron-left"></i>-->
-                        </a>
-                    </li>
-                    <li class="page-item disabled">
-                        <a class="page-link disabled" href="#" th:text="${customerList.number + 1}"></a>
-                    </li>
-                    <li class="page-item disabled">
-                        <a class="page-link disabled" href="#">/</a>
-                    </li>
-                    <li class="page-item disabled">
-                        <a class="page-link disabled" href="#" th:text="${customerList.totalPages}"></a>
-                    </li>
-                    <span>&nbsp;</span>
-                    <li class="page-item" th:attrappend="class=${!customerList.hasNext() ? ' disabled' : ''}">
-                        <a class="page-link"
-                           th:attrappend="class=${!customerList.hasNext() ? ' disabled' : ''}"
-                           th:href="@{list(page=${customerList.number + 1}, keyword=${name_keyword})}">
-                            Next
-                            <!--                            <i class="fas fa-chevron-right"></i>-->
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+    <section class="container">
+        <div class="page-header">
+            <h1>Material cards demo<br>
+                <small>See full features on <a href="https://github.com/marlenesco/material-cards" target="_blank">Github</a></small></h1>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Delete Confirm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="row active-with-click">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <article class="material-card Red">
+                    <h2>
+                        <span>Christopher Walken</span>
+                        <strong>
+                            <i class="fa fa-fw fa-star"></i>
+                            The Deer Hunter
+                        </strong>
+                    </h2>
+                    <div class="mc-content">
+                        <div class="img-container">
+                            <img class="img-responsive" src="https://material-cards.s3-eu-west-1.amazonaws.com/thumb-christopher-walken.jpg">
+                        </div>
+                        <div class="mc-description">
+                            He has appeared in more than 100 films and television shows, including The Deer Hunter, Annie Hall, The Prophecy trilogy, The Dogs of War ...
+                        </div>
+                    </div>
+                    <a class="mc-btn-action">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <div class="mc-footer">
+                        <h4>
+                            Social
+                        </h4>
+                        <a class="fa fa-fw fa-facebook"></a>
+                        <a class="fa fa-fw fa-twitter"></a>
+                        <a class="fa fa-fw fa-linkedin"></a>
+                        <a class="fa fa-fw fa-google-plus"></a>
+                    </div>
+                </article>
             </div>
-            <form th:action="@{/customer/delete}" method="post">
-                <div class="modal-body">
-                    <h5 style="color: #3FB6A8">Do you want to delete Customer with information: </h5>
-                    <div id="customer_id"></div>
-                    <div id="customer_name"></div>
-                    <input type="hidden" name="id" id="id_delete">
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Yes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <article class="material-card Pink">
+                    <h2>
+                        <span>Sean Penn</span>
+                        <strong>
+                            <i class="fa fa-fw fa-star"></i>
+                            Mystic River
+                        </strong>
+                    </h2>
+                    <div class="mc-content">
+                        <div class="img-container">
+                            <img class="img-responsive" src="https://material-cards.s3-eu-west-1.amazonaws.com/thumb-sean-penn.jpg">
+                        </div>
+                        <div class="mc-description">
+                            He has won two Academy Awards, for his roles in the mystery drama Mystic River (2003) and the biopic Milk (2008). Penn began his acting career in television with a brief appearance in a 1974 episode of Little House on the Prairie ...
+                        </div>
+                    </div>
+                    <a class="mc-btn-action">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <div class="mc-footer">
+                        <h4>
+                            Social
+                        </h4>
+                        <a class="fa fa-fw fa-facebook"></a>
+                        <a class="fa fa-fw fa-twitter"></a>
+                        <a class="fa fa-fw fa-linkedin"></a>
+                        <a class="fa fa-fw fa-google-plus"></a>
+                    </div>
+                </article>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
-<script>
-    function deleteModal(id, name) {
-        document.getElementById("id_delete").value = id;
-        document.getElementById("customer_id").innerText = "id: " + id;
-        document.getElementById("customer_name").innerText = "name: " + name;
-    }
-</script>
 <div th:replace="~{layout :: footer}"></div>
 </body>
 <th:block th:replace="layout::external_js">

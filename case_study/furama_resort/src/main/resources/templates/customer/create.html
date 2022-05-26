@@ -5,27 +5,17 @@
     <title>Title</title>
     <th:block th:replace="~{layout :: external_css}">
     </th:block>
+    <style>
+        p{margin-bottom: 0}
+    </style>
 </head>
 <body>
 <header th:replace="~{layout :: header}"></header>
 
 <div class="container-fluid">
-
-    <!--    <div id="form" >-->
-    <!--        <form th:action="@{/song/save}" th:object="${customerDto}"-->
-    <!--              method="POST" novalidate="novalidate">-->
-    <!--            <input type="hidden" th:field="*{customerId}"/>-->
-    <!--            <div class="form-group">-->
-    <!--                <label>Name</label>-->
-    <!--                <input class="form-control" type="text" th:field="*{customerName}"/>-->
-    <!--&lt;!&ndash;                <p style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{customerName}"></p>&ndash;&gt;-->
-    <!--            </div>-->
-    <!--            -->
-    <!--        </form>-->
-    <!--    </div>-->
-    <div class="col-5 mx-auto" >
+    <div class="col-5 mx-auto">
         <div class="text-center pt-3">
-            <h3 style="color: #069A8E">Create Customer</h3>
+            <h3 style="color: #3FB6A8">Create Customer</h3>
         </div>
         <p class="text-center">
             <a th:href="@{/customer/list}">
@@ -36,17 +26,21 @@
               method="POST" novalidate="novalidate">
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row mb-4">
-                <div class="col">
+                <div class="col-7">
                     <div class="form-outline">
                         <input type="text" id="form3Example1" class="form-control" th:field="*{customerName}"/>
                         <label class="form-label" for="form3Example1">Full name</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customerName')}"
+                           th:errors="*{customerName}"></small>
                 </div>
-                <div class="col">
+                <div class="col-5">
                     <div class="form-outline">
                         <input type="date" id="form3Example2" class="form-control" th:field="*{customerBirthday}"/>
                         <label class="form-label" for="form3Example2">Birthday</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customerBirthday')}"
+                           th:errors="*{customerBirthday}"></small>
                 </div>
             </div>
 
@@ -54,10 +48,12 @@
                 <div class="col">
                     <div>
                         <select class="form-control" id="exampleFormControlSelect1" th:field="*{customerGender}">
-                            <option value="%">--Choose Gender--</option>
+                            <option value="">--Choose Gender--</option>
                             <option value="0">Female</option>
                             <option value="1">Male</option>
                         </select>
+                        <small style="color: red;" th:if="${#fields.hasErrors('customerGender')}"
+                               th:errors="*{customerGender}"></small>
                     </div>
                 </div>
                 <div class="col">
@@ -65,12 +61,16 @@
                         <input type="text" id="form3Example4" class="form-control" th:field="*{customerIdCard}"/>
                         <label class="form-label" for="form3Example4">ID Card</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customerIdCard')}"
+                           th:errors="*{customerIdCard}"></small>
                 </div>
                 <div class="col">
                     <div class="form-outline">
                         <input type="text" id="form3Example5" class="form-control" th:field="*{customerPhone}"/>
                         <label class="form-label" for="form3Example5">Phone</label>
                     </div>
+                    <p style="color: red;" th:if="${#fields.hasErrors('customerPhone')}"
+                       th:errors="*{customerPhone}"></p>
                 </div>
             </div>
 
@@ -80,32 +80,37 @@
                         <input type="text" id="form3Example6" class="form-control" th:field="*{customerEmail}"/>
                         <label class="form-label" for="form3Example6">Email</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customerEmail')}"
+                           th:errors="*{customerEmail}"></small>
                 </div>
                 <div class="col-7">
                     <div class="form-outline">
                         <input type="text" id="form3Example7" class="form-control" th:field="*{customerAddress}"/>
                         <label class="form-label" for="form3Example7">Address</label>
                     </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customerAddress')}"
+                           th:errors="*{customerAddress}"></small>
                 </div>
             </div>
 
-
-            <!-- Email input -->
             <div class="mb-4">
                 <div class="form-outline">
                     <input type="text" id="form3Example8" class="form-control" th:field="*{urlImage}"/>
                     <label class="form-label" for="form3Example8">Image</label>
                 </div>
+                <small style="color: red;" th:if="${#fields.hasErrors('urlImage')}"
+                       th:errors="*{urlImage}"></small>
             </div>
 
             <div class="mb-4">
                 <div class="form-group">
                     <select class="form-control" id="exampleFormControlSelect2" th:field="*{customerType}">
-                        <option value="%">---Choose Customer Type---</option>
+                        <option value="">---Choose Customer Type---</option>
                         <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
                                 th:text="${type.customerTypeName}"></option>
-
                     </select>
+                    <small style="color: red;" th:if="${#fields.hasErrors('customerType')}"
+                           th:errors="*{customerType}"></small>
                 </div>
             </div>
 

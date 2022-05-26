@@ -1,13 +1,18 @@
 package com.codegym.furama_resort.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer employeeId;
+    @GeneratedValue(generator = "prod-generator")
+    @GenericGenerator(name = "prod-generator",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "NV"),
+            strategy = "com.codegym.furama_resort.common.IdentityCodeGenerator")
+    private String employeeId;
     private String employeeName;
     @Column(columnDefinition = "Date")
     private String employeeBirthday;
@@ -16,6 +21,10 @@ public class Employee {
     private String employeePhone;
     private String employeeEmail;
     private String employeeAddress;
+    private String urlImage;
+
+    @Column(columnDefinition = "bit default 1")
+    private boolean status = true;
 
     @OneToMany(mappedBy = "employee")
     private List<Contract> contractList;
@@ -39,27 +48,37 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Integer employeeId, String employeeName, String employeeBirthday, String employeeIdCard, Double employeeSalary, String employeePhone, String employeeEmail, String employeeAddress, List<Contract> contractList, Position position, EducationDegree educationDegree, Division division, User user) {
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
-        this.employeeBirthday = employeeBirthday;
-        this.employeeIdCard = employeeIdCard;
-        this.employeeSalary = employeeSalary;
-        this.employeePhone = employeePhone;
-        this.employeeEmail = employeeEmail;
-        this.employeeAddress = employeeAddress;
-        this.contractList = contractList;
-        this.position = position;
-        this.educationDegree = educationDegree;
-        this.division = division;
-        this.user = user;
+
+
+    public String getUrlImage() {
+        return urlImage;
     }
 
-    public Integer getEmployeeId() {
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Integer employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 

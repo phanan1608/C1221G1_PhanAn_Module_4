@@ -17,6 +17,7 @@ public class Service {
     private String descriptionOtherConvenience;
     private Double poolArea;
     private Integer numberOfFloor;
+    private String urlImage;
 
     @ManyToOne
     @JoinColumn(name = "rent_type_id",referencedColumnName = "rentTypeId")
@@ -33,7 +34,7 @@ public class Service {
     public Service() {
     }
 
-    public Service(Integer serviceId, String serviceCode, String serviceName, Integer serviceArea, Double serviceCost, Integer serviceMaxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloor, RentType rentType, ServiceType serviceType, List<Contract> contractList) {
+    public Service(Integer serviceId, String serviceCode, String serviceName, Integer serviceArea, Double serviceCost, Integer serviceMaxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloor, String urlImage, RentType rentType, ServiceType serviceType, List<Contract> contractList) {
         this.serviceId = serviceId;
         this.serviceCode = serviceCode;
         this.serviceName = serviceName;
@@ -44,6 +45,7 @@ public class Service {
         this.descriptionOtherConvenience = descriptionOtherConvenience;
         this.poolArea = poolArea;
         this.numberOfFloor = numberOfFloor;
+        this.urlImage = urlImage;
         this.rentType = rentType;
         this.serviceType = serviceType;
         this.contractList = contractList;
@@ -151,5 +153,13 @@ public class Service {
 
     public void setContractList(List<Contract> contractList) {
         this.contractList = contractList;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }

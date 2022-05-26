@@ -1,4 +1,7 @@
 package com.codegym.furama_resort.repository;
 
-public interface IPositionRepository {
+import com.codegym.furama_resort.entity.Position;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IPositionRepository extends JpaRepository<Position, Integer> {
 }

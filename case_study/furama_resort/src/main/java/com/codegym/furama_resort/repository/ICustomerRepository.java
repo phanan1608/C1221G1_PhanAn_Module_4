@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
+public interface ICustomerRepository extends JpaRepository<Customer, String> {
 
-            Page<Customer> findAllByCustomerNameContainingAndCustomerPhoneContainingAndCustomerType_CustomerTypeId(String customerName, String customerPhone, Integer type, Pageable pageable);
-            Page<Customer> findAllByCustomerNameContainingAndCustomerPhoneContaining(String customerName, String customerPhone, Pageable pageable);
+            Page<Customer> findAllByCustomerNameContainingAndCustomerPhoneContainingAndCustomerType_CustomerTypeIdAndStatus(String customerName, String customerPhone, Integer customerType_customerTypeId, boolean status, Pageable pageable);
+            Page<Customer> findAllByCustomerNameContainingAndCustomerPhoneContainingAndStatus(String customerName, String customerPhone, boolean status, Pageable pageable);
 
 
 

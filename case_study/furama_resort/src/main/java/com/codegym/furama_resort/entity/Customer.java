@@ -1,13 +1,22 @@
 package com.codegym.furama_resort.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Parameter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customerId;
+    @GeneratedValue(generator = "prod-generator")
+    @GenericGenerator(name = "prod-generator",
+            parameters = @Parameter(name = "prefix", value = "KH"),
+            strategy = "com.codegym.furama_resort.common.IdentityCodeGenerator")
+    private String customerId;
+
     private String customerCode;
     private String customerName;
     @Column(columnDefinition = "Date")
@@ -19,36 +28,25 @@ public class Customer {
     private String customerAddress;
     private String urlImage;
 
+    @Column(columnDefinition = "bit default 1")
+    private boolean status = true;
+
     @ManyToOne
     @JoinColumn(name = "customer_type_id",referencedColumnName = "customerTypeId")
     private CustomerType customerType;
 
-    @OneToMany(mappedBy = "customer",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "customer")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Contract> contractList;
 
     public Customer() {
     }
 
-    public Customer(Integer customerId, String customerCode, String customerName, String customerBirthday, Integer customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress, String urlImage, CustomerType customerType, List<Contract> contractList) {
-        this.customerId = customerId;
-        this.customerCode = customerCode;
-        this.customerName = customerName;
-        this.customerBirthday = customerBirthday;
-        this.customerGender = customerGender;
-        this.customerIdCard = customerIdCard;
-        this.customerPhone = customerPhone;
-        this.customerEmail = customerEmail;
-        this.customerAddress = customerAddress;
-        this.urlImage = urlImage;
-        this.customerType = customerType;
-        this.contractList = contractList;
-    }
-
-    public Integer getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
@@ -138,5 +136,13 @@ public class Customer {
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

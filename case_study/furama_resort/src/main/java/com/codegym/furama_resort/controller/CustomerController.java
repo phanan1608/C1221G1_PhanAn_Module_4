@@ -42,7 +42,9 @@ public class CustomerController {
         String phoneKeyword = phone.orElse("");
         Integer typeKeyword = type.orElse(-1);
         model.addAttribute("customerList", customerService.findAll(nameKeyword, phoneKeyword, typeKeyword, pageable));
-        model.addAttribute("name_keyword", name);
+        model.addAttribute("name_keyword", nameKeyword);
+        model.addAttribute("phone_keyword", phoneKeyword);
+        model.addAttribute("type_keyword", typeKeyword);
         return "/customer/list";
     }
 
@@ -56,8 +58,7 @@ public class CustomerController {
     public String saveProduct(@ModelAttribute @Validated CustomerDto customerDto,
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) {
-//        new CustomerDto().validate(customerDto,bindingResult);
-
+        new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return "/customer/create";
         } else {
@@ -70,21 +71,21 @@ public class CustomerController {
     }
 
     @GetMapping("/view/{id}")
-    public String viewBook(@PathVariable Integer id, Model model) {
+    public String viewBook(@PathVariable String id, Model model) {
         Customer customer = customerService.findById(id);
         model.addAttribute("customer", customer);
         return "/customer/view";
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Integer id, RedirectAttributes redirectAttributes) {
+    public String delete(@RequestParam String id, RedirectAttributes redirectAttributes) {
         this.customerService.remove(id);
         redirectAttributes.addFlashAttribute("msg", "Delete Successfully");
         return "redirect:/customer/list";
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable Integer id) {
+    public String edit(Model model, @PathVariable String id) {
         Customer customer = this.customerService.findById(id);
         CustomerDto customerDto = new CustomerDto();
         BeanUtils.copyProperties(customer, customerDto);
@@ -95,6 +96,7 @@ public class CustomerController {
     @PostMapping("/update")
     public String update(@ModelAttribute @Validated CustomerDto customerDto, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, Model model) {
+        new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return "/customer/edit";
         }
@@ -104,5 +106,10 @@ public class CustomerController {
         redirectAttributes.addFlashAttribute("msg", "Update Successfully");
         return "redirect:/customer/list";
 
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String showToErrorPage() {
+        return "/error/error";
     }
 }

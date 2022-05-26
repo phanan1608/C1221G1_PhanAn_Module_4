@@ -8,22 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
-    ICustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
 
 
-    @Override
-    public Page<Customer> findAll(String name, String phone, Integer type, Pageable pageable) {
-        if (type == -1){
-            return customerRepository.findAllByCustomerNameContainingAndCustomerPhoneContaining(name,phone,pageable);
-
-        } else {
-            return customerRepository.findAllByCustomerNameContainingAndCustomerPhoneContainingAndCustomerType_CustomerTypeId(name, phone, type, pageable);
-
-        }
-    }
 
     @Override
     public void save(Customer customer) {
@@ -31,7 +23,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer findById(int id) {
+    public Customer findById(String id) {
         return customerRepository.findById(id).orElse(null);
     }
 
@@ -41,7 +33,25 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void remove(int id) {
-        customerRepository.delete(this.findById(id));
+    public void remove(String id) {
+        Customer customer = this.findById(id);
+        customer.setStatus(false);
+        this.customerRepository.save(customer);
+    }
+
+    @Override
+    public Page<Customer> findAll(String name, String phone, Integer type, Pageable pageable) {
+        if (type == -1){
+            return customerRepository.findAllByCustomerNameContainingAndCustomerPhoneContainingAndStatus(name,phone,true,pageable);
+
+        } else {
+            return customerRepository.findAllByCustomerNameContainingAndCustomerPhoneContainingAndCustomerType_CustomerTypeIdAndStatus(name, phone, type,true, pageable);
+
+        }
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 }
