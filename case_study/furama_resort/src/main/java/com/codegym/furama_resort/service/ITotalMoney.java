@@ -5,6 +5,7 @@ public interface ITotalMoney {
     String getCustomerName();
     String getCustomerTypeName();
     String getServiceName();
+    Integer getContractId();
     String getStartDate();
     String getAttachServiceName();
     String getEndDate();

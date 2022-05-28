@@ -25,7 +25,6 @@ public class EmployeeDto implements Validator {
     private Position position;
     private EducationDegree educationDegree;
     private Division division;
-    private User user;
     private String urlImage;
 
     public EmployeeDto() {
@@ -127,14 +126,6 @@ public class EmployeeDto implements Validator {
         this.division = division;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -186,6 +177,7 @@ public class EmployeeDto implements Validator {
             errors.rejectValue("division", "blank.error", "System Error");
         }
 
+
         if ("".matches(employeeDto.employeeBirthday)) {
             errors.rejectValue("employeeBirthday", "blank.error", "System Error");
         } else if (!employeeDto.employeeBirthday.matches(Validate.DATE_TIME_REGEX)) {
@@ -194,11 +186,12 @@ public class EmployeeDto implements Validator {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             Date birthdayDate = null;
             Date current = new Date();
+            fmt.setLenient(false);
             try {
                 birthdayDate = fmt.parse(employeeDto.employeeBirthday);
                 // KIEM TRA NGAY CO TRONG QUA KHU KHONG
 //                if (birthdayDate != null && birthdayDate.compareTo(new Date()) > 0) {
-//                    errors.rejectValue("employeeBirthday", "","Birthday must in the past");
+//                    errors.rejectValue("customerBirthday", "","Birthday must in the past");
 //                }
                 // KIEM TRA TUOI > 18
                 OffsetDateTime startOdt = birthdayDate.toInstant().atOffset(ZoneOffset.UTC);
@@ -206,9 +199,9 @@ public class EmployeeDto implements Validator {
                 int years = Period.between(startOdt.toLocalDate(), endOdt.toLocalDate()).getYears();
                 System.out.println(years);
                 if (years < 18) {
-                    errors.reject("employeeBirthday", "MUST BE > 18 YEAR OLD");
+                    errors.rejectValue("employeeBirthday", "", "MUST BE > 18 YEAR OLD");
                 } else if (years > 100) {
-                    errors.reject("employeeBirthday", "MUST BE < 100 YEAR OLD");
+                    errors.rejectValue("employeeBirthday","","MUST BE < 100 YEAR OLD");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -217,3 +210,4 @@ public class EmployeeDto implements Validator {
         }
     }
 }
+

@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/contract")
 public class ContractController {
@@ -44,6 +46,12 @@ public class ContractController {
         model.addAttribute("customerList", customerService.findAll());
         model.addAttribute("employeeList", employeeService.findAll());
         model.addAttribute("facilityList", facilityService.findAll());
+        model.addAttribute("attachServiceList", attachService.findAll());
+        List<ITotalMoney> totalMoneyPage = contractService.findAllByTotal();
+        System.out.println(totalMoneyPage.get(0).getContractId());
+        model.addAttribute("totalList", totalMoneyPage);
+
+
     }
 
 
@@ -66,7 +74,7 @@ public class ContractController {
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes,
                               Model model) {
-        new ContractDto().validate(contractDto,bindingResult);
+        new ContractDto().validate(contractDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return "contract/create";
         } else {
@@ -79,12 +87,11 @@ public class ContractController {
     }
 
     @GetMapping(value = "/create-contract-detail/{id}")
-    public String showCreateContractDetail(Model model, @PathVariable Integer id) {;
+    public String showCreateContractDetail(Model model, @PathVariable Integer id) {
         ContractDetailDto contractDetailDto = new ContractDetailDto();
         Contract contract = contractService.findById(id);
         contractDetailDto.setContract(contract);
         model.addAttribute("contractDetailDto", contractDetailDto);
-        model.addAttribute("attachServiceList", attachService.findAll());
         return "/contract-detail/create";
     }
 
@@ -93,7 +100,7 @@ public class ContractController {
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes,
                               Model model) {
-        new ContractDetailDto().validate(contractDetailDto,bindingResult);
+        new ContractDetailDto().validate(contractDetailDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return "contract-detail/create";
         } else {

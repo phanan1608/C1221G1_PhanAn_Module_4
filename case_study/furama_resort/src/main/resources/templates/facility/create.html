@@ -41,7 +41,7 @@
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        <input type="number" id="form3Example3" class="form-control" th:field="*{serviceMaxPeople}"/>
+                        <input type="text" id="form3Example3" class="form-control" th:field="*{serviceMaxPeople}"/>
                         <label class="form-label" for="form3Example3">People</label>
                     </div>
                     <small style="color: red;" th:if="${#fields.hasErrors('serviceMaxPeople')}"
@@ -63,8 +63,9 @@
                     <div class="form-outline">
                         <input type="text" id="form3Example4" class="form-control" th:field="*{serviceArea}"/>
                         <label class="form-label" for="form3Example4">Area</label>
-                    </div><small style="color: red;" th:if="${#fields.hasErrors('serviceArea')}"
-                                 th:errors="*{serviceArea}"></small>
+                    </div>
+                    <small style="color: red;" th:if="${#fields.hasErrors('serviceArea')}"
+                           th:errors="*{serviceArea}"></small>
                 </div>
 
             </div>
@@ -110,8 +111,8 @@
                                th:field="*{poolArea}"/>
                         <label class="form-label" for="formExample1">Pool Area</label>
                     </div>
-<!--                    <small style="color: red;" th:if="${#fields.hasErrors('poolArea')}"-->
-<!--                           th:errors="*{poolArea}"></small>-->
+                    <!--                    <small style="color: red;" th:if="${#fields.hasErrors('poolArea')}"-->
+                    <!--                           th:errors="*{poolArea}"></small>-->
                 </div>
                 <div class="col">
                     <div class="form-outline">
@@ -119,8 +120,8 @@
                                th:field="*{numberOfFloor}"/>
                         <label class="form-label" for="formExample2">Floor</label>
                     </div>
-<!--                    <small style="color: red;" th:if="${#fields.hasErrors('numberOfFloor')}"-->
-<!--                           th:errors="*{numberOfFloor}"></small>-->
+                    <!--                    <small style="color: red;" th:if="${#fields.hasErrors('numberOfFloor')}"-->
+                    <!--                           th:errors="*{numberOfFloor}"></small>-->
                 </div>
 
                 <div class="col">
@@ -129,8 +130,8 @@
                                th:field="*{descriptionOtherConvenience}"/>
                         <label class="form-label" for="formExample3">Description</label>
                     </div>
-<!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
-<!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
+                    <!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
+                    <!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
                 </div>
             </div>
             <div class="row mb-4" id="house_items">
@@ -140,8 +141,8 @@
                                th:field="*{numberOfFloor}"/>
                         <label class="form-label" for="formExample4">Floor</label>
                     </div>
-<!--                    <small style="color: red;" th:if="${#fields.hasErrors('numberOfFloor')}"-->
-<!--                           th:errors="*{numberOfFloor}"></small>-->
+                    <!--                    <small style="color: red;" th:if="${#fields.hasErrors('numberOfFloor')}"-->
+                    <!--                           th:errors="*{numberOfFloor}"></small>-->
                 </div>
                 <div class="col">
                     <div class="form-outline">
@@ -149,8 +150,8 @@
                                th:field="*{descriptionOtherConvenience}"/>
                         <label class="form-label" for="formExample5">Description</label>
                     </div>
-<!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
-<!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
+                    <!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
+                    <!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
                 </div>
             </div>
             <div class="row mb-4" id="room_items">
@@ -160,8 +161,8 @@
                                th:field="*{descriptionOtherConvenience}"/>
                         <label class="form-label" for="formExample6">Description</label>
                     </div>
-<!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
-<!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
+                    <!--                    <small style="color: red;" th:if="${#fields.hasErrors('descriptionOtherConvenience')}"-->
+                    <!--                           th:errors="*{descriptionOtherConvenience}"></small>-->
                 </div>
             </div>
 
@@ -183,55 +184,89 @@
 
 
 <script>
-    $(document).ready(function () {
-        console.log($("#service_select"))
-        if ($("#service_select").value==undefined){
-            $("#villa_items").hide()
+    getSelectVal();
+
+    function getSelectVal(){
+        let val= $("#service_select").val();
+        if (val == 1) {
+            $("#villa_items").show()
             $("#house_items").hide()
             $("#room_items").hide()
-            $("#villa_items").find("input").prop("disabled", true)
+            $("#villa_items").find("input").prop("disabled", false)
             $("#house_items").find("input").prop("disabled", true)
             $("#room_items").find("input").prop("disabled", true)
+        } else if (val == 2) {
+            $("#house_items").show()
+            $("#villa_items").hide()
+            $("#room_items").hide()
+            $("#house_items").find("input").prop("disabled", false)
+            $("#villa_items").find("input").prop("disabled", true)
+            $("#room_items").find("input").prop("disabled", true)
+        } else if (val == 3) {
+            $("#room_items").show()
+            $("#villa_items").hide()
+            $("#house_items").hide()
+            $("#room_items").find("input").prop("disabled", false)
+            $("#villa_items").find("input").prop("disabled", true)
+            $("#house_items").find("input").prop("disabled", true)
+        } else {
+            $("#room_items").hide()
+            $("#villa_items").hide()
+            $("#house_items").hide()
+            $("#room_items").find("input").prop("disabled", true)
+            $("#villa_items").find("input").prop("disabled", true)
+            $("#house_items").find("input").prop("disabled", true)
         }
+    }
+    $("#service_select").change(function () {
+        getSelectVal();
+    });
 
-
-        $("#service_select").change(function () {
-            if (this.value == 1) {
-                $("#villa_items").show()
-                $("#house_items").hide()
-                $("#room_items").hide()
-                $("#villa_items").find("input").prop("disabled", false).val("")
-                $("#house_items").find("input").prop("disabled", true).val("")
-                $("#room_items").find("input").prop("disabled", true).val("")
-            } else if (this.value == 2) {
-                $("#house_items").show()
-                $("#villa_items").hide()
-                $("#room_items").hide()
-                $("#house_items").find("input").prop("disabled", false).val("")
-                $("#villa_items").find("input").prop("disabled", true).val("")
-                $("#room_items").find("input").prop("disabled", true).val("")
-            } else if (this.value == 3) {
-                $("#room_items").show()
-                $("#villa_items").hide()
-                $("#house_items").hide()
-                $("#room_items").find("input").prop("disabled", false).val("")
-                $("#villa_items").find("input").prop("disabled", true).val("")
-                $("#house_items").find("input").prop("disabled", true).val("")
-            } else {
-                $("#room_items").hide()
-                $("#villa_items").hide()
-                $("#house_items").hide()
-                $("#room_items").find("input").prop("disabled", true).val("")
-                $("#villa_items").find("input").prop("disabled", true).val("")
-                $("#house_items").find("input").prop("disabled", true).val("")
-            }
-        })
-
-    })
-
-
-
-
+    // $(document).ready(function () {
+    //     console.log($("#service_select"))
+    //     if ($("#service_select").value == undefined) {
+    //         $("#villa_items").hide()
+    //         $("#house_items").hide()
+    //         $("#room_items").hide()
+    //         $("#villa_items").find("input").prop("disabled", true)
+    //         $("#house_items").find("input").prop("disabled", true)
+    //         $("#room_items").find("input").prop("disabled", true)
+    //     }
+    //
+    //
+    //     $("#service_select").change(function () {
+    //         if (this.value == 1) {
+    //             $("#villa_items").show()
+    //             $("#house_items").hide()
+    //             $("#room_items").hide()
+    //             $("#villa_items").find("input").prop("disabled", false)
+    //             $("#house_items").find("input").prop("disabled", true)
+    //             $("#room_items").find("input").prop("disabled", true)
+    //         } else if (this.value == 2) {
+    //             $("#house_items").show()
+    //             $("#villa_items").hide()
+    //             $("#room_items").hide()
+    //             $("#house_items").find("input").prop("disabled", false)
+    //             $("#villa_items").find("input").prop("disabled", true)
+    //             $("#room_items").find("input").prop("disabled", true)
+    //         } else if (this.value == 3) {
+    //             $("#room_items").show()
+    //             $("#villa_items").hide()
+    //             $("#house_items").hide()
+    //             $("#room_items").find("input").prop("disabled", false)
+    //             $("#villa_items").find("input").prop("disabled", true)
+    //             $("#house_items").find("input").prop("disabled", true)
+    //         } else {
+    //             $("#room_items").hide()
+    //             $("#villa_items").hide()
+    //             $("#house_items").hide()
+    //             $("#room_items").find("input").prop("disabled", true)
+    //             $("#villa_items").find("input").prop("disabled", true)
+    //             $("#house_items").find("input").prop("disabled", true)
+    //         }
+    //     })
+    //
+    // })
 
 
 </script>

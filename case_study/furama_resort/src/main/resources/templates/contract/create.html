@@ -25,7 +25,7 @@
             <div class="row mb-4">
                 <div class="col">
                     <div class="form-outline">
-                        <input type="date" id="form3Example1" class="form-control" th:field="*{contractStartDate}"/>
+                        <input type="text" id="form3Example1" class="form-control" th:field="*{contractStartDate}"/>
                         <label class="form-label" for="form3Example1">Start Date</label>
                     </div>
                     <small style="color: red;" th:if="${#fields.hasErrors('contractStartDate')}"

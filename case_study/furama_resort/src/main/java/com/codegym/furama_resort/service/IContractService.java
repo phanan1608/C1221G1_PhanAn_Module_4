@@ -20,4 +20,5 @@ public interface IContractService {
 
 
     Page<ITotalMoney> findAllByTotal(Pageable pageable);
+    List<ITotalMoney> findAllByTotal();
 }

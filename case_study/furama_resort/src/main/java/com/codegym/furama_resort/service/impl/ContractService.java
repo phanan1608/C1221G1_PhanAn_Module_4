@@ -50,5 +50,9 @@ public class ContractService implements IContractService {
     public Page<ITotalMoney> findAllByTotal(Pageable pageable) {
         return contractRepository.findByTotal(pageable);
     }
+    public List<ITotalMoney> findAllByTotal() {
+        return contractRepository.findByTotal();
+    }
+
 
 }

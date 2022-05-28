@@ -20,6 +20,27 @@ public class MainController {
         model.addAttribute("message", "This is welcome page!");
         return "welcomePage";
     }
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+
+        if (principal != null) {
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+
+            String userInfo = WebUtils.toString(loginedUser);
+
+            model.addAttribute("userInfo", userInfo);
+
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+
+        }
+
+        return "403Page";
+    }
+
+
+
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Model model, Principal principal) {
@@ -60,23 +81,6 @@ public class MainController {
         return "userInfoPage";
     }
 
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String accessDenied(Model model, Principal principal) {
 
-        if (principal != null) {
-            User loginedUser = (User) ((Authentication) principal).getPrincipal();
-
-            String userInfo = WebUtils.toString(loginedUser);
-
-            model.addAttribute("userInfo", userInfo);
-
-            String message = "Hi " + principal.getName() //
-                    + "<br> You do not have permission to access this page!";
-            model.addAttribute("message", message);
-
-        }
-
-        return "403Page";
-    }
 
 }

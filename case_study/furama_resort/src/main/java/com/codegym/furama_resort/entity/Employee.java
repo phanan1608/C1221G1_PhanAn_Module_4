@@ -41,9 +41,11 @@ public class Employee {
     @JoinColumn(name = "division_id",referencedColumnName = "divisionId")
     private Division  division;
 
+
+
     @ManyToOne
-    @JoinColumn(name = "user_name",referencedColumnName = "username")
-    private User user;
+    @JoinColumn(name = "user_id",referencedColumnName = "User_Id")
+    private AppUser appUser;
 
     public Employee() {
     }
@@ -170,11 +172,12 @@ public class Employee {
         this.division = division;
     }
 
-    public User getUser() {
-        return user;
+
+    public AppUser getAppUser() {
+        return appUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

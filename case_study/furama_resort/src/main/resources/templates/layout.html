@@ -6,7 +6,7 @@
     <th:block th:fragment="external_css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
               integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-        crossorigin="anonymous">
+              crossorigin="anonymous">
 
         <!-- Font Awesome -->
         <link
@@ -88,15 +88,12 @@
 
                 <!-- Right elements -->
                 <div class="d-flex align-items-center">
-                    <!-- Icon -->
-                    <a class="text-reset me-3" href="#">
-                        <i class="fas fa-shopping-cart"></i>
-                    </a>
+
 
                     <!-- Notifications -->
                     <div class="dropdown">
                         <a
-                                class="text-reset me-3 dropdown-toggle hidden-arrow"
+                                class="text-reset m-2 dropdown-toggle hidden-arrow"
                                 href="#"
                                 id="navbarDropdownMenuLink"
                                 role="button"
@@ -121,40 +118,54 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- Icon -->
+                    <a class="text-reset " style="margin: 0 12px" href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
                     <!-- Avatar -->
-                    <div class="dropdown">
-                        <a
-                                class="dropdown-toggle d-flex align-items-center hidden-arrow"
-                                href="#"
-                                id="navbarDropdownMenuAvatar"
-                                role="button"
-                                data-mdb-toggle="dropdown"
-                                aria-expanded="false"
-                        >
-                            <img
-                                    src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                                    class="rounded-circle"
-                                    height="25"
-                                    alt="Black and White Portrait of a Man"
-                                    loading="lazy"
-                            />
-                        </a>
-                        <ul
-                                class="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="navbarDropdownMenuAvatar"
-                        >
-                            <li>
-                                <a class="dropdown-item" href="#">My profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Settings</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Logout</a>
-                            </li>
-                        </ul>
+                    <div class="" style="margin: 0 12px">
+                        <th:block th:if="${#request.userPrincipal}">
+                            <span class="my-2" th:text="${#request.userPrincipal.name}"></span>
+                        </th:block>
+                    </div>
+
+                    <div>
+                        <a th:unless="${#request.userPrincipal}" href="/login" class="">Sign in</a>
+                        <th:block th:if="${#request.userPrincipal}" class="">
+                            <div class="dropdown">
+                                <a
+                                        class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                                        href="#"
+                                        id="navbarDropdownMenuAvatar"
+                                        role="button"
+                                        data-mdb-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                                         class="rounded-circle"
+                                         height="25"
+                                         alt="Black and White Portrait of a Man"
+                                         loading="lazy"/>
+                                </a>
+                                <ul
+                                        class="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="navbarDropdownMenuAvatar"
+                                >
+                                    <li>
+                                        <a class="dropdown-item" href="#">My profile</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Settings</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </th:block>
                     </div>
                 </div>
+
+
                 <!-- Right elements -->
             </div>
             <!-- Container wrapper -->
@@ -163,15 +174,17 @@
     </header>
 
 
-
     <!-- Carousel wrapper -->
     <div id="carouselMaterialStyle" class="carousel slide carousel-fade" data-mdb-ride="carousel">
         <!-- Indicators -->
         <div class="carousel-indicators">
-            <button type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide-to="0" class="active" aria-current="true"
+            <button type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide-to="0" class="active"
+                    aria-current="true"
                     aria-label="Slide 1"></button>
-            <button type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide-to="2"
+                    aria-label="Slide 3"></button>
         </div>
 
         <!-- Inner -->
@@ -179,7 +192,7 @@
             <!-- Single item -->
             <div class="carousel-item active">
                 <img src="../static/image/Untitled-1.png" class="d-block w-100"
-                     alt="Sunset Over the City" />
+                     alt="Sunset Over the City"/>
                 <div class="carousel-caption d-none d-md-block dark">
                     <a href="#" class="btn"> Villa <i class="fas fa-chevron-right"></i></a>
                     <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -189,7 +202,7 @@
             <!-- Single item -->
             <div class="carousel-item">
                 <img src="../static/image/Untitled-2.png" class="d-block w-100"
-                     alt="Canyon at Nigh" />
+                     alt="Canyon at Nigh"/>
                 <div class="carousel-caption d-none d-md-block dark">
                     <a href="#" class="btn">Pool <i class="fas fa-chevron-right"></i></a>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -199,9 +212,9 @@
             <!-- Single item -->
             <div class="carousel-item">
                 <img src="../static/image/Untitled-3.png" class="d-block w-100"
-                     alt="Cliff Above a Stormy Sea" />
+                     alt="Cliff Above a Stormy Sea"/>
                 <div class="carousel-caption d-none d-md-block dark">
-<!--                    <h5>Room</h5>-->
+                    <!--                    <h5>Room</h5>-->
                     <a href="#" class="btn">Room <i class="fas fa-chevron-right"></i></a>
                     <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                 </div>
@@ -210,11 +223,13 @@
         <!-- Inner -->
 
         <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide="prev">
+        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselMaterialStyle"
+                data-mdb-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-mdb-target="#carouselMaterialStyle" data-mdb-slide="next">
+        <button class="carousel-control-next" type="button" data-mdb-target="#carouselMaterialStyle"
+                data-mdb-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -238,7 +253,7 @@
             <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
         </div>
         <div>
-            <img src="../static/image/Untitled-5.png" alt="" />
+            <img src="../static/image/Untitled-5.png" alt=""/>
             <h3>Room</h3>
             <p>
                 Express yourself powerfully with a thin, light, and elegant design,
@@ -247,7 +262,7 @@
             <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
         </div>
         <div>
-            <img src="../static/image/Untitled-7.png" alt="" />
+            <img src="../static/image/Untitled-7.png" alt=""/>
             <h3>Bathroom</h3>
             <p>
                 Expect more. World class performance, with more privacy, more
@@ -256,7 +271,7 @@
             <a href="#">Learn More <i class="fas fa-chevron-right"></i></a>
         </div>
         <div>
-            <img src="../static/image/Untitled-6.png" alt="" />
+            <img src="../static/image/Untitled-6.png" alt=""/>
             <h3>Pool</h3>
             <p>
                 Buy an Xbox One X console and double your fun with a free select
@@ -283,7 +298,8 @@
     <!-- Home cards 2 -->
     <section class="home-cards">
         <div>
-            <img src="https://images.squarespace-cdn.com/content/v1/6019110850c91d7ffbcc7b3f/1612263720747-NUR9MWDJRDLIKQPZNPBB/Pouring+dressing+on+a+salad%2C+London+Social+Media+Marketing%2C+Zodee+Media?format=1000w" alt="" />
+            <img src="https://images.squarespace-cdn.com/content/v1/6019110850c91d7ffbcc7b3f/1612263720747-NUR9MWDJRDLIKQPZNPBB/Pouring+dressing+on+a+salad%2C+London+Social+Media+Marketing%2C+Zodee+Media?format=1000w"
+                 alt=""/>
             <h3>Dinner</h3>
             <p>
                 Unleash the power of your team.
@@ -291,7 +307,8 @@
             <a href="#">Try now <i class="fas fa-chevron-right"></i></a>
         </div>
         <div>
-            <img src="https://images.squarespace-cdn.com/content/v1/6019110850c91d7ffbcc7b3f/1612259484011-D6E2C46ARDLP2NE0F3R2/Fall+decorated+appetizers%2C+London+Social+Media+Marketing%2C+Zodee+Media?format=1500w" alt="" />
+            <img src="https://images.squarespace-cdn.com/content/v1/6019110850c91d7ffbcc7b3f/1612259484011-D6E2C46ARDLP2NE0F3R2/Fall+decorated+appetizers%2C+London+Social+Media+Marketing%2C+Zodee+Media?format=1500w"
+                 alt=""/>
             <h3>Snack</h3>
             <p>
                 Get students future-ready with Windows 10 devices. Starting at $219.
@@ -299,7 +316,8 @@
             <a href="#">Try now <i class="fas fa-chevron-right"></i></a>
         </div>
         <div>
-            <img src="https://images.squarespace-cdn.com/content/v1/6019110850c91d7ffbcc7b3f/1612260014494-ST5ERMI22MFYM9L3D20K/Bronze+globe%2C+London+Social+Media+Marketing%2C+Zodee+Media?format=1000w" alt="" />
+            <img src="https://images.squarespace-cdn.com/content/v1/6019110850c91d7ffbcc7b3f/1612260014494-ST5ERMI22MFYM9L3D20K/Bronze+globe%2C+London+Social+Media+Marketing%2C+Zodee+Media?format=1000w"
+                 alt=""/>
             <h3>Drinks</h3>
             <p>
                 Download the free 90-day evaluation for IT professionals.
@@ -307,7 +325,7 @@
             <a href="#">Try now <i class="fas fa-chevron-right"></i></a>
         </div>
         <div>
-            <img src="../static/image/Untitled-11.png" alt="" />
+            <img src="../static/image/Untitled-11.png" alt=""/>
             <h3>Cocktail</h3>
             <p>
                 Learn how Kubernetes works and get started with cloud native app

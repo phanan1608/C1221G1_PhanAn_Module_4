@@ -163,6 +163,7 @@ public class CustomerDto implements Validator {
             errors.rejectValue("urlImage", "blank.error", "System Error");
         }
 
+
         if ("".matches(customerDto.customerBirthday)) {
             errors.rejectValue("customerBirthday", "blank.error", "System Error");
         } else if (!customerDto.customerBirthday.matches(Validate.DATE_TIME_REGEX)) {
@@ -171,6 +172,7 @@ public class CustomerDto implements Validator {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             Date birthdayDate = null;
             Date current = new Date();
+            fmt.setLenient(false);
             try {
                 birthdayDate = fmt.parse(customerDto.customerBirthday);
                 // KIEM TRA NGAY CO TRONG QUA KHU KHONG
@@ -183,9 +185,9 @@ public class CustomerDto implements Validator {
                 int years = Period.between(startOdt.toLocalDate(), endOdt.toLocalDate()).getYears();
                 System.out.println(years);
                 if (years < 18) {
-                    errors.reject("customerBirthday","MUST BE > 18 YEAR OLD");
+                    errors.rejectValue("customerBirthday", "", "MUST BE > 18 YEAR OLD");
                 } else if (years > 100) {
-                    errors.reject("customerBirthday","MUST BE < 100 YEAR OLD");
+                    errors.rejectValue("customerBirthday","","MUST BE < 100 YEAR OLD");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

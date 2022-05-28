@@ -137,6 +137,7 @@ public class ContractDto implements Validator {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             Date current = new Date();
+            fmt.setLenient(false);
             try {
                 date = fmt.parse(contractDto.contractStartDate);
 //                 KIEM TRA NGAY CO TRONG QUA KHU KHONG

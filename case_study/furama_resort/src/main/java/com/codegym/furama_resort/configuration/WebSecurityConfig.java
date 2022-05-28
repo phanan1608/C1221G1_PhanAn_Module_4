@@ -1,8 +1,6 @@
-package com.codegym.config;
+package com.codegym.furama_resort.configuration;
 
-import javax.sql.DataSource;
-
-import com.codegym.service.UserDetailsServiceImpl;
+import com.codegym.furama_resort.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -52,10 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Trang /userInfo yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
         // Nếu chưa login, nó sẽ redirect tới trang /login.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/facility/**","/customer/**","/contract/**","/contract-detail/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
         // Trang chỉ dành cho ADMIN
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/employee/**").access("hasRole('ROLE_ADMIN')");
+//        http.authorizeRequests().antMatchers("/contract/**","/contract-detail/**","/customer/**").access("hasRole('ROLE_ADMIN')");
+//        http.authorizeRequests().antMatchers("/employee/**","/contract/**","/contract-detail/**","/customer/**").access("hasRole('ROLE_ADMIN')");
+//        http.authorizeRequests().antMatchers("/employee/**","/contract/**","/contract-detail/**","/customer/**").access("hasRole('ROLE_ADMIN')");
 
         // Khi người dùng đã login, với vai trò XX.
         // Nhưng truy cập vào trang yêu cầu vai trò YY,
@@ -67,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")//
-                .defaultSuccessUrl("/home")// Trang chủ
+                .defaultSuccessUrl("/")// Trang chủ
                 .failureUrl("/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")

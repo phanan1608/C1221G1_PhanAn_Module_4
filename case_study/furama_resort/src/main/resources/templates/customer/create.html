@@ -47,11 +47,18 @@
             <div class="row mb-4">
                 <div class="col">
                     <div>
-                        <select class="form-control" id="exampleFormControlSelect1" th:field="*{customerGender}">
+<!--                        <select class="form-control" id="exampleFormControlSelect1" th:field="*{customerGender}">-->
+<!--                            <option value="">&#45;&#45;Choose Gender&#45;&#45;</option>-->
+<!--                            <option value="0">Female</option>-->
+<!--                            <option value="1">Male</option>-->
+<!--                        </select>-->
+
+                        <input class="form-control" list="datalistOptions" placeholder="--Choose Gender--">
+                        <datalist id="datalistOptions" th:field="*{customerGender}">
                             <option value="">--Choose Gender--</option>
                             <option value="0">Female</option>
                             <option value="1">Male</option>
-                        </select>
+                        </datalist>
                         <small style="color: red;" th:if="${#fields.hasErrors('customerGender')}"
                                th:errors="*{customerGender}"></small>
                     </div>
@@ -104,11 +111,17 @@
 
             <div class="mb-4">
                 <div class="form-group">
-                    <select class="form-control" id="exampleFormControlSelect2" th:field="*{customerType}">
+<!--                    <select class="form-control" id="exampleFormControlSelect2" th:field="*{customerType}">-->
+<!--                        <option value="">-&#45;&#45;Choose Customer Type-&#45;&#45;</option>-->
+<!--                        <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"-->
+<!--                                th:text="${type.customerTypeName}"></option>-->
+<!--                    </select>-->
+                    <input class="form-control" th:field="*{customerType}" list="datalistOptions1" placeholder="--Choose Customer Type--">
+                    <datalist id="datalistOptions1" >
                         <option value="">---Choose Customer Type---</option>
                         <option th:each="type:${customerTypeList}" th:value="${type.customerTypeId}"
                                 th:text="${type.customerTypeName}"></option>
-                    </select>
+                    </datalist>
                     <small style="color: red;" th:if="${#fields.hasErrors('customerType')}"
                            th:errors="*{customerType}"></small>
                 </div>

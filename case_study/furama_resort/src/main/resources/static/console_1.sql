@@ -113,3 +113,19 @@ values
 (1, 1, 3),
 (2, 1, 2),
 (2, 12, 2);
+
+select customer.customer_id customerId,
+       customer.customer_name customerName,
+       customer_type.customer_type_name customerTypeName,
+       service.service_name serviceName,
+       contract.contract_start_date startDate,
+       GROUP_CONCAT(attach_service.attach_service_name) attachServiceName,
+       contract.contract_end_date endDate,
+       sum((coalesce(contract_detail.quantity * attach_service.attach_service_cost, 0))) + service_cost as total
+from contract
+         join customer on contract.customer_id = customer.customer_id
+         left join customer_type on customer.customer_type_id = customer_type.customer_type_id
+         left join contract_detail on contract.contract_id = contract_detail.contract_id
+         left join service on contract.service_id = service.service_id
+         left join attach_service on contract_detail.attach_service_id = attach_service.attach_service_id
+group by contract.contract_id
